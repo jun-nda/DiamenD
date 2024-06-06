@@ -42,8 +42,7 @@ public class NetStart : MonoBehaviour {
                 GameObject prefab = Resources.Load<GameObject>("Prefabs/Jammo");
                 GameObject hero = spawnPlayer(prefab);
                 hero.name = "Character(Player)";
-                hero.GetComponent<GameEntity>().isMine = true;
-                hero.GetComponent<GameEntity>()?.SetData(e);
+                hero.GetComponent<Player>().isMine = true;
             });
             
         }
@@ -61,8 +60,7 @@ public class NetStart : MonoBehaviour {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/Jammo");
             GameObject hero = spawnPlayer(prefab);
             hero.name = "Character-" + e.Id;
-            hero.GetComponent<GameEntity>()?.SetData(e.Entity);
-            hero.GetComponent<GameEntity>().isMine = false;
+            hero.GetComponent<Player>().isMine = false;
         });
     }
     

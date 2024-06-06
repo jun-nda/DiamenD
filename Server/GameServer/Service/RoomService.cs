@@ -2,6 +2,7 @@
 using Proto;
 using Summer;
 using Summer.Network;
+using PlayerInput = Proto.PlayerInputInfo;
 
 namespace GameServer.Service;
 
@@ -15,8 +16,10 @@ public class RoomService : Singleton<RoomService>
     public void Start()
     {
         //位置同步请求
-        MessageRouter.Instance.Subscribe<SpaceEntitySyncRequest>(_SpaceEntitySyncRequest);
+        //MessageRouter.Instance.Subscribe<SpaceEntitySyncRequest>(_SpaceEntitySyncRequest);
 
+        MessageRouter.Instance.Subscribe<PlayerInputSingle>(_OnPlayerInput);
+        
         //测试房间
         var room = new Room
         {
@@ -30,6 +33,24 @@ public class RoomService : Singleton<RoomService>
     public Room GetRoom(int roomId)
     {
         return roomDict[roomId];
+    }
+
+    private static void _OnPlayerInput(Connection conn, PlayerInputSingle input)
+    {
+        Player player = conn.Get<Player>();
+        Room room = conn.Get<Room>();
+        LockStep lockStep = room.LockStep;
+        player.Input.InputX = input.PlayerInputInfo.InputX;
+        player.Input.InputZ = input.PlayerInputInfo.InputZ;
+        var tick = input.Tick;
+
+        // 一个Tick对应一个全体输入
+        if (!lockStep.Tick2Inputs.ContainsKey(tick))
+        {
+            lockStep.Tick2Inputs.Add(tick, new Model.PlayerInput[Room.maxPlayerCount]);
+        }
+        lockStep.Tick2Inputs[tick][player.entityId] = player.Input;
+        lockStep.CheckInput();
     }
     
     private static void _SpaceEntitySyncRequest(Connection conn, SpaceEntitySyncRequest msg)

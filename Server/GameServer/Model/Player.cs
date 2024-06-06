@@ -10,12 +10,14 @@ using System.Threading.Tasks;
 namespace GameServer.Model
 {
     //角色
-    public class Character : Actor
+    public class Player : Actor
     {
         //当前角色的客户端连接
         public Connection conn;
 
-        public Character(int id, Vector3Int position, Vector3Int direction) : base(id, position, direction)
+        public PlayerInput Input;
+        
+        public Player(int id, Vector3Int position, Vector3Int direction) : base(id, position, direction)
         {
 
         }    

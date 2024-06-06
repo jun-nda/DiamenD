@@ -365,4 +365,7 @@ FodyWeavers.xsd
 Client/Library
 Client/build
 Client/Temp
+Client/UserSettings
 Client/.idea
+Server/.idea
+*.csproj

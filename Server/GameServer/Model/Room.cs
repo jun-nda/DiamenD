@@ -15,29 +15,29 @@ namespace GameServer.Model
         public int Id { get; set; }
         public string Name { get; set; }
 
-        private Dictionary<int, Character> CharacterDict = new Dictionary<int, Character>();
+        private Dictionary<int, Player> CharacterDict = new Dictionary<int, Player>();
 
-        private Dictionary<Connection, Character> ConnCharacter = new Dictionary<Connection, Character>();
+        private Dictionary<Connection, Player> ConnCharacter = new Dictionary<Connection, Player>();
         
-        private LockStep _lockStep = new LockStep();
+        public LockStep LockStep = new LockStep();
         
-        public void CharacterJoin(Connection conn,Character character)
+        public void CharacterJoin(Connection conn,Player player)
         {
-            Log.Information("角色进入场景:" + character.entityId);
-            conn.Set<Character>(character); //把角色存入连接
+            Log.Information("角色进入场景:" + player.entityId);
+            conn.Set<Player>(player); //把角色存入连接
             conn.Set<Room>(this);          //把场景存入连接
-            character.SpaceId = this.Id;
+            player.SpaceId = this.Id;
             
-            CharacterDict[character.entityId] = character;
-            character.conn = conn;
+            CharacterDict[player.entityId] = player;
+            player.conn = conn;
             if (!ConnCharacter.ContainsKey(conn))
             {
-                ConnCharacter[conn] = character;
+                ConnCharacter[conn] = player;
             }
             //把新进入的角色广播给其他玩家
             var resp = new SpaceCharactersEnterResponse();
             resp.SpaceId = this.Id; //场景ID
-            resp.CharacterList.Add(character.GetData());
+            resp.CharacterList.Add(player.GetData());
             foreach(var kv in CharacterDict)
             {
                 if (kv.Value.conn != conn)
@@ -57,7 +57,8 @@ namespace GameServer.Model
             // lockStep
             if (CharacterDict.Count >= maxPlayerCount)
             {
-                _lockStep.Start();
+                LockStep.Conn = conn;
+                LockStep.Start();
             }
         }
         
@@ -66,14 +67,14 @@ namespace GameServer.Model
         /// 客户端离线、切换地图
         /// </summary>
         /// <param name="conn"></param>
-        /// <param name="character"></param>
-        public void CharacterLeave(Connection conn,Character character)
+        /// <param name="player"></param>
+        public void CharacterLeave(Connection conn,Player player)
         {
-            Log.Information("角色离开场景:" + character.entityId);
+            Log.Information("角色离开场景:" + player.entityId);
             conn.Set<Room>(null);          //取消conn的场景记录
-            CharacterDict.Remove(character.entityId);
+            CharacterDict.Remove(player.entityId);
             SpaceCharacterLeaveResponse resp = new SpaceCharacterLeaveResponse();
-            resp.EntityId = character.entityId;
+            resp.EntityId = player.entityId;
             foreach (var kv in CharacterDict)
             {
                 kv.Value.conn.Send(resp);

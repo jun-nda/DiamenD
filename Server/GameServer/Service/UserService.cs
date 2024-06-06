@@ -31,15 +31,15 @@ namespace GameServer.Network
             Random rand = new Random();
             Vector3Int pos = new Vector3Int(rand.Next(-5,5), 0, rand.Next(-5, 5));
             pos *= 1000;
-            Character character = new Character(entityId, pos, Vector3Int.zero);
+            Player player = new Player(entityId, pos, Vector3Int.zero);
             //通知玩家登录成功
             GameEnterResponse resp = new GameEnterResponse();
             resp.Success = true;
-            resp.Entity = character.GetData().Entity;
+            resp.Entity = player.GetData().Entity;
             conn.Send(resp);
             //将新角色加入到地图
             var room = RoomService.Instance.GetRoom(6); //新手村
-            room.CharacterJoin(conn, character);
+            room.CharacterJoin(conn, player);
         }
     }
 }

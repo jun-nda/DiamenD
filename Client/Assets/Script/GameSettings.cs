@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GameMgr : MonoBehaviour {
+public class GameSettings : MonoBehaviour {
     public TMP_Dropdown solution;
     // Start is called before the first frame update
     void Start()

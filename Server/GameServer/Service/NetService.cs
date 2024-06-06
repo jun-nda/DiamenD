@@ -50,7 +50,7 @@ namespace Summer
             var space = conn.Get<Room>();
             if (space != null)
             {
-                var co = conn.Get<Character>();
+                var co = conn.Get<Player>();
                 space.CharacterLeave(conn, co);
             }
         }
