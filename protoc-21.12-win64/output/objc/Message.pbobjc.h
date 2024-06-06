@@ -212,6 +212,36 @@ GPB_FINAL @interface UserLoginResponse : GPBMessage
 
 @end
 
+#pragma mark - PlayerInput
+
+typedef GPB_ENUM(PlayerInput_FieldNumber) {
+  PlayerInput_FieldNumber_InputX = 1,
+  PlayerInput_FieldNumber_InputZ = 2,
+  PlayerInput_FieldNumber_MousePosX = 3,
+  PlayerInput_FieldNumber_MousePosZ = 4,
+  PlayerInput_FieldNumber_InputFire = 5,
+  PlayerInput_FieldNumber_SkillId = 6,
+  PlayerInput_FieldNumber_InputSpeedUp = 7,
+};
+
+GPB_FINAL @interface PlayerInput : GPBMessage
+
+@property(nonatomic, readwrite) int32_t inputX;
+
+@property(nonatomic, readwrite) int32_t inputZ;
+
+@property(nonatomic, readwrite) int32_t mousePosX;
+
+@property(nonatomic, readwrite) int32_t mousePosZ;
+
+@property(nonatomic, readwrite) BOOL inputFire;
+
+@property(nonatomic, readwrite) int32_t skillId;
+
+@property(nonatomic, readwrite) BOOL inputSpeedUp;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

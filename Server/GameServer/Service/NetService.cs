@@ -1,5 +1,6 @@
 ﻿
 using System.Net.Sockets;
+using GameServer.Model;
 using Google.Protobuf;
 using Proto;
 using Summer.Network;
@@ -35,18 +36,23 @@ namespace Summer
         /// <param name="socket"></param>
         private void OnClientConnected(Connection conn)
         {
-            Console.WriteLine("客户端接入:" + conn.ToString());
-
+            Console.WriteLine("客户端接入:" + conn.Socket.RemoteEndPoint);
         }
 
         private void OnDataReceived(Connection conn, IMessage data)
         {
-            MessageRouter.Instance.AddMessage(conn, data);
+
         }
 
-        private void OnDisconnected(Connection sender)
+        private void OnDisconnected(Connection conn)
         {
             Console.WriteLine("连接断开");
+            var space = conn.Get<Room>();
+            if (space != null)
+            {
+                var co = conn.Get<Character>();
+                space.CharacterLeave(conn, co);
+            }
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using Google.Protobuf;
+﻿using System;
+using System.Collections.Generic;
+using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using Proto;
 using System.Reflection;
-using Common;
+using System.Threading;
+using Serilog;
 
 namespace Summer.Network
 {
@@ -16,7 +19,7 @@ namespace Summer.Network
     /// 消息路由
     /// 职责：负责订阅与消息转发
     /// </summary>
-    public class MessageRouter : SingleTon<MessageRouter>
+    public class MessageRouter : Singleton<MessageRouter>
     {
         private int _threadCount; // 工作线程数
         private int _workerCount; // 正在工作的线程数
@@ -39,7 +42,7 @@ namespace Summer.Network
         private Dictionary<string, Delegate> delegateMap = new Dictionary<string, Delegate>();
 
         // 订阅
-        public void On<T>(MessageHandler<T> handler) where T : IMessage
+        public void Subscribe<T>(MessageHandler<T> handler) where T : IMessage
         {
             string type = typeof(T).FullName;
             if(!delegateMap.ContainsKey(type))
@@ -47,13 +50,14 @@ namespace Summer.Network
                 delegateMap[type] = null;
             }
             delegateMap[type] = (delegateMap[type] as MessageHandler<T>) + handler;
-            Console.WriteLine(type + ":" + delegateMap[type].GetInvocationList().Length);
+            Console.WriteLine("消息订阅:" + type + ":" + delegateMap[type].GetInvocationList().Length);
 
         }
 
         // 触发
         void Fire<T>(Connection sender, T msg)
         {
+            Log.Information("string");
             string type = typeof (T).FullName;
             if (delegateMap.ContainsKey(type))
             {
@@ -137,13 +141,17 @@ namespace Summer.Network
                     lock(messageQueue)
                     {
                         if (messageQueue.Count == 0) continue;
-                            msg = messageQueue.Dequeue();
+                        Log.Information("executeMessage"+ Thread.CurrentThread.ManagedThreadId.ToString() + messageQueue.Count);
+
+                        msg = messageQueue.Dequeue();
                     }
+
                     IMessage package = msg.message;
                     if (package != null)
                     {
                         executeMessage(msg.sender, package);
                     }
+
                 }
             }
             catch (Exception ex)
@@ -165,6 +173,7 @@ namespace Summer.Network
             var fireMethod = this.GetType().GetMethod("Fire",
                 BindingFlags.NonPublic | BindingFlags.Instance);
             var met = fireMethod.MakeGenericMethod(message.GetType());
+            Log.Information("invoke");
             met.Invoke(this, new object[] { sender, message });
 
             var t = message.GetType();

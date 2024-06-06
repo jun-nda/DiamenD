@@ -44,6 +44,15 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :code, :int32, 1
       optional :message, :string, 2
     end
+    add_message "Proto.Message.PlayerInput" do
+      optional :inputX, :int32, 1
+      optional :inputZ, :int32, 2
+      optional :mousePosX, :int32, 3
+      optional :mousePosZ, :int32, 4
+      optional :inputFire, :bool, 5
+      optional :skillId, :int32, 6
+      optional :inputSpeedUp, :bool, 7
+    end
   end
 end
 
@@ -58,5 +67,6 @@ module Proto
     UserRegisterResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.UserRegisterResponse").msgclass
     UserLoginRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.UserLoginRequest").msgclass
     UserLoginResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.UserLoginResponse").msgclass
+    PlayerInput = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.PlayerInput").msgclass
   end
 end

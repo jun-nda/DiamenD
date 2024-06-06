@@ -40,7 +40,11 @@ namespace Proto.Message {
             "b3JkGAIgASgJIjUKFFVzZXJSZWdpc3RlclJlc3BvbnNlEgwKBGNvZGUYASAB",
             "KAUSDwoHbWVzc2FnZRgCIAEoCSI2ChBVc2VyTG9naW5SZXF1ZXN0EhAKCHVz",
             "ZXJuYW1lGAEgASgJEhAKCHBhc3N3b3JkGAIgASgJIjIKEVVzZXJMb2dpblJl",
-            "c3BvbnNlEgwKBGNvZGUYASABKAUSDwoHbWVzc2FnZRgCIAEoCWIGcHJvdG8z"));
+            "c3BvbnNlEgwKBGNvZGUYASABKAUSDwoHbWVzc2FnZRgCIAEoCSKNAQoLUGxh",
+            "eWVySW5wdXQSDgoGaW5wdXRYGAEgASgFEg4KBmlucHV0WhgCIAEoBRIRCglt",
+            "b3VzZVBvc1gYAyABKAUSEQoJbW91c2VQb3NaGAQgASgFEhEKCWlucHV0Rmly",
+            "ZRgFIAEoCBIPCgdza2lsbElkGAYgASgFEhQKDGlucHV0U3BlZWRVcBgHIAEo",
+            "CGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -52,7 +56,8 @@ namespace Proto.Message {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Message.UserRegisterRequest), global::Proto.Message.UserRegisterRequest.Parser, new[]{ "Username", "Password" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Message.UserRegisterResponse), global::Proto.Message.UserRegisterResponse.Parser, new[]{ "Code", "Message" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Message.UserLoginRequest), global::Proto.Message.UserLoginRequest.Parser, new[]{ "Username", "Password" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Message.UserLoginResponse), global::Proto.Message.UserLoginResponse.Parser, new[]{ "Code", "Message" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Message.UserLoginResponse), global::Proto.Message.UserLoginResponse.Parser, new[]{ "Code", "Message" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Message.PlayerInput), global::Proto.Message.PlayerInput.Parser, new[]{ "InputX", "InputZ", "MousePosX", "MousePosZ", "InputFire", "SkillId", "InputSpeedUp" }, null, null, null, null)
           }));
     }
     #endregion
@@ -2267,6 +2272,417 @@ namespace Proto.Message {
           }
           case 18: {
             Message = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class PlayerInput : pb::IMessage<PlayerInput>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<PlayerInput> _parser = new pb::MessageParser<PlayerInput>(() => new PlayerInput());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<PlayerInput> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto.Message.MessageReflection.Descriptor.MessageTypes[9]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PlayerInput() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PlayerInput(PlayerInput other) : this() {
+      inputX_ = other.inputX_;
+      inputZ_ = other.inputZ_;
+      mousePosX_ = other.mousePosX_;
+      mousePosZ_ = other.mousePosZ_;
+      inputFire_ = other.inputFire_;
+      skillId_ = other.skillId_;
+      inputSpeedUp_ = other.inputSpeedUp_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PlayerInput Clone() {
+      return new PlayerInput(this);
+    }
+
+    /// <summary>Field number for the "inputX" field.</summary>
+    public const int InputXFieldNumber = 1;
+    private int inputX_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int InputX {
+      get { return inputX_; }
+      set {
+        inputX_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "inputZ" field.</summary>
+    public const int InputZFieldNumber = 2;
+    private int inputZ_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int InputZ {
+      get { return inputZ_; }
+      set {
+        inputZ_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "mousePosX" field.</summary>
+    public const int MousePosXFieldNumber = 3;
+    private int mousePosX_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int MousePosX {
+      get { return mousePosX_; }
+      set {
+        mousePosX_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "mousePosZ" field.</summary>
+    public const int MousePosZFieldNumber = 4;
+    private int mousePosZ_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int MousePosZ {
+      get { return mousePosZ_; }
+      set {
+        mousePosZ_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "inputFire" field.</summary>
+    public const int InputFireFieldNumber = 5;
+    private bool inputFire_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool InputFire {
+      get { return inputFire_; }
+      set {
+        inputFire_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "skillId" field.</summary>
+    public const int SkillIdFieldNumber = 6;
+    private int skillId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int SkillId {
+      get { return skillId_; }
+      set {
+        skillId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "inputSpeedUp" field.</summary>
+    public const int InputSpeedUpFieldNumber = 7;
+    private bool inputSpeedUp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool InputSpeedUp {
+      get { return inputSpeedUp_; }
+      set {
+        inputSpeedUp_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as PlayerInput);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(PlayerInput other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (InputX != other.InputX) return false;
+      if (InputZ != other.InputZ) return false;
+      if (MousePosX != other.MousePosX) return false;
+      if (MousePosZ != other.MousePosZ) return false;
+      if (InputFire != other.InputFire) return false;
+      if (SkillId != other.SkillId) return false;
+      if (InputSpeedUp != other.InputSpeedUp) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (InputX != 0) hash ^= InputX.GetHashCode();
+      if (InputZ != 0) hash ^= InputZ.GetHashCode();
+      if (MousePosX != 0) hash ^= MousePosX.GetHashCode();
+      if (MousePosZ != 0) hash ^= MousePosZ.GetHashCode();
+      if (InputFire != false) hash ^= InputFire.GetHashCode();
+      if (SkillId != 0) hash ^= SkillId.GetHashCode();
+      if (InputSpeedUp != false) hash ^= InputSpeedUp.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (InputX != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(InputX);
+      }
+      if (InputZ != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(InputZ);
+      }
+      if (MousePosX != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(MousePosX);
+      }
+      if (MousePosZ != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(MousePosZ);
+      }
+      if (InputFire != false) {
+        output.WriteRawTag(40);
+        output.WriteBool(InputFire);
+      }
+      if (SkillId != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(SkillId);
+      }
+      if (InputSpeedUp != false) {
+        output.WriteRawTag(56);
+        output.WriteBool(InputSpeedUp);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (InputX != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(InputX);
+      }
+      if (InputZ != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(InputZ);
+      }
+      if (MousePosX != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(MousePosX);
+      }
+      if (MousePosZ != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(MousePosZ);
+      }
+      if (InputFire != false) {
+        output.WriteRawTag(40);
+        output.WriteBool(InputFire);
+      }
+      if (SkillId != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(SkillId);
+      }
+      if (InputSpeedUp != false) {
+        output.WriteRawTag(56);
+        output.WriteBool(InputSpeedUp);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (InputX != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(InputX);
+      }
+      if (InputZ != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(InputZ);
+      }
+      if (MousePosX != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MousePosX);
+      }
+      if (MousePosZ != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MousePosZ);
+      }
+      if (InputFire != false) {
+        size += 1 + 1;
+      }
+      if (SkillId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SkillId);
+      }
+      if (InputSpeedUp != false) {
+        size += 1 + 1;
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(PlayerInput other) {
+      if (other == null) {
+        return;
+      }
+      if (other.InputX != 0) {
+        InputX = other.InputX;
+      }
+      if (other.InputZ != 0) {
+        InputZ = other.InputZ;
+      }
+      if (other.MousePosX != 0) {
+        MousePosX = other.MousePosX;
+      }
+      if (other.MousePosZ != 0) {
+        MousePosZ = other.MousePosZ;
+      }
+      if (other.InputFire != false) {
+        InputFire = other.InputFire;
+      }
+      if (other.SkillId != 0) {
+        SkillId = other.SkillId;
+      }
+      if (other.InputSpeedUp != false) {
+        InputSpeedUp = other.InputSpeedUp;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            InputX = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            InputZ = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            MousePosX = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            MousePosZ = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            InputFire = input.ReadBool();
+            break;
+          }
+          case 48: {
+            SkillId = input.ReadInt32();
+            break;
+          }
+          case 56: {
+            InputSpeedUp = input.ReadBool();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            InputX = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            InputZ = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            MousePosX = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            MousePosZ = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            InputFire = input.ReadBool();
+            break;
+          }
+          case 48: {
+            SkillId = input.ReadInt32();
+            break;
+          }
+          case 56: {
+            InputSpeedUp = input.ReadBool();
             break;
           }
         }

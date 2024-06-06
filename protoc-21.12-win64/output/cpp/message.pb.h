@@ -52,6 +52,9 @@ extern EntityDefaultTypeInternal _Entity_default_instance_;
 class Package;
 struct PackageDefaultTypeInternal;
 extern PackageDefaultTypeInternal _Package_default_instance_;
+class PlayerInput;
+struct PlayerInputDefaultTypeInternal;
+extern PlayerInputDefaultTypeInternal _PlayerInput_default_instance_;
 class Request;
 struct RequestDefaultTypeInternal;
 extern RequestDefaultTypeInternal _Request_default_instance_;
@@ -78,6 +81,7 @@ extern Vector3DefaultTypeInternal _Vector3_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::Proto::Message::Entity* Arena::CreateMaybeMessage<::Proto::Message::Entity>(Arena*);
 template<> ::Proto::Message::Package* Arena::CreateMaybeMessage<::Proto::Message::Package>(Arena*);
+template<> ::Proto::Message::PlayerInput* Arena::CreateMaybeMessage<::Proto::Message::PlayerInput>(Arena*);
 template<> ::Proto::Message::Request* Arena::CreateMaybeMessage<::Proto::Message::Request>(Arena*);
 template<> ::Proto::Message::Response* Arena::CreateMaybeMessage<::Proto::Message::Response>(Arena*);
 template<> ::Proto::Message::UserLoginRequest* Arena::CreateMaybeMessage<::Proto::Message::UserLoginRequest>(Arena*);
@@ -1655,6 +1659,220 @@ class UserLoginResponse final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_message_2eproto;
 };
+// -------------------------------------------------------------------
+
+class PlayerInput final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Proto.Message.PlayerInput) */ {
+ public:
+  inline PlayerInput() : PlayerInput(nullptr) {}
+  ~PlayerInput() override;
+  explicit PROTOBUF_CONSTEXPR PlayerInput(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PlayerInput(const PlayerInput& from);
+  PlayerInput(PlayerInput&& from) noexcept
+    : PlayerInput() {
+    *this = ::std::move(from);
+  }
+
+  inline PlayerInput& operator=(const PlayerInput& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PlayerInput& operator=(PlayerInput&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PlayerInput& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PlayerInput* internal_default_instance() {
+    return reinterpret_cast<const PlayerInput*>(
+               &_PlayerInput_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  friend void swap(PlayerInput& a, PlayerInput& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PlayerInput* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PlayerInput* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PlayerInput* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PlayerInput>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PlayerInput& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PlayerInput& from) {
+    PlayerInput::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PlayerInput* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Proto.Message.PlayerInput";
+  }
+  protected:
+  explicit PlayerInput(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kInputXFieldNumber = 1,
+    kInputZFieldNumber = 2,
+    kMousePosXFieldNumber = 3,
+    kMousePosZFieldNumber = 4,
+    kSkillIdFieldNumber = 6,
+    kInputFireFieldNumber = 5,
+    kInputSpeedUpFieldNumber = 7,
+  };
+  // int32 inputX = 1;
+  void clear_inputx();
+  int32_t inputx() const;
+  void set_inputx(int32_t value);
+  private:
+  int32_t _internal_inputx() const;
+  void _internal_set_inputx(int32_t value);
+  public:
+
+  // int32 inputZ = 2;
+  void clear_inputz();
+  int32_t inputz() const;
+  void set_inputz(int32_t value);
+  private:
+  int32_t _internal_inputz() const;
+  void _internal_set_inputz(int32_t value);
+  public:
+
+  // int32 mousePosX = 3;
+  void clear_mouseposx();
+  int32_t mouseposx() const;
+  void set_mouseposx(int32_t value);
+  private:
+  int32_t _internal_mouseposx() const;
+  void _internal_set_mouseposx(int32_t value);
+  public:
+
+  // int32 mousePosZ = 4;
+  void clear_mouseposz();
+  int32_t mouseposz() const;
+  void set_mouseposz(int32_t value);
+  private:
+  int32_t _internal_mouseposz() const;
+  void _internal_set_mouseposz(int32_t value);
+  public:
+
+  // int32 skillId = 6;
+  void clear_skillid();
+  int32_t skillid() const;
+  void set_skillid(int32_t value);
+  private:
+  int32_t _internal_skillid() const;
+  void _internal_set_skillid(int32_t value);
+  public:
+
+  // bool inputFire = 5;
+  void clear_inputfire();
+  bool inputfire() const;
+  void set_inputfire(bool value);
+  private:
+  bool _internal_inputfire() const;
+  void _internal_set_inputfire(bool value);
+  public:
+
+  // bool inputSpeedUp = 7;
+  void clear_inputspeedup();
+  bool inputspeedup() const;
+  void set_inputspeedup(bool value);
+  private:
+  bool _internal_inputspeedup() const;
+  void _internal_set_inputspeedup(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Proto.Message.PlayerInput)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t inputx_;
+    int32_t inputz_;
+    int32_t mouseposx_;
+    int32_t mouseposz_;
+    int32_t skillid_;
+    bool inputfire_;
+    bool inputspeedup_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_message_2eproto;
+};
 // ===================================================================
 
 
@@ -2858,9 +3076,155 @@ inline void UserLoginResponse::set_allocated_message(std::string* message) {
   // @@protoc_insertion_point(field_set_allocated:Proto.Message.UserLoginResponse.message)
 }
 
+// -------------------------------------------------------------------
+
+// PlayerInput
+
+// int32 inputX = 1;
+inline void PlayerInput::clear_inputx() {
+  _impl_.inputx_ = 0;
+}
+inline int32_t PlayerInput::_internal_inputx() const {
+  return _impl_.inputx_;
+}
+inline int32_t PlayerInput::inputx() const {
+  // @@protoc_insertion_point(field_get:Proto.Message.PlayerInput.inputX)
+  return _internal_inputx();
+}
+inline void PlayerInput::_internal_set_inputx(int32_t value) {
+  
+  _impl_.inputx_ = value;
+}
+inline void PlayerInput::set_inputx(int32_t value) {
+  _internal_set_inputx(value);
+  // @@protoc_insertion_point(field_set:Proto.Message.PlayerInput.inputX)
+}
+
+// int32 inputZ = 2;
+inline void PlayerInput::clear_inputz() {
+  _impl_.inputz_ = 0;
+}
+inline int32_t PlayerInput::_internal_inputz() const {
+  return _impl_.inputz_;
+}
+inline int32_t PlayerInput::inputz() const {
+  // @@protoc_insertion_point(field_get:Proto.Message.PlayerInput.inputZ)
+  return _internal_inputz();
+}
+inline void PlayerInput::_internal_set_inputz(int32_t value) {
+  
+  _impl_.inputz_ = value;
+}
+inline void PlayerInput::set_inputz(int32_t value) {
+  _internal_set_inputz(value);
+  // @@protoc_insertion_point(field_set:Proto.Message.PlayerInput.inputZ)
+}
+
+// int32 mousePosX = 3;
+inline void PlayerInput::clear_mouseposx() {
+  _impl_.mouseposx_ = 0;
+}
+inline int32_t PlayerInput::_internal_mouseposx() const {
+  return _impl_.mouseposx_;
+}
+inline int32_t PlayerInput::mouseposx() const {
+  // @@protoc_insertion_point(field_get:Proto.Message.PlayerInput.mousePosX)
+  return _internal_mouseposx();
+}
+inline void PlayerInput::_internal_set_mouseposx(int32_t value) {
+  
+  _impl_.mouseposx_ = value;
+}
+inline void PlayerInput::set_mouseposx(int32_t value) {
+  _internal_set_mouseposx(value);
+  // @@protoc_insertion_point(field_set:Proto.Message.PlayerInput.mousePosX)
+}
+
+// int32 mousePosZ = 4;
+inline void PlayerInput::clear_mouseposz() {
+  _impl_.mouseposz_ = 0;
+}
+inline int32_t PlayerInput::_internal_mouseposz() const {
+  return _impl_.mouseposz_;
+}
+inline int32_t PlayerInput::mouseposz() const {
+  // @@protoc_insertion_point(field_get:Proto.Message.PlayerInput.mousePosZ)
+  return _internal_mouseposz();
+}
+inline void PlayerInput::_internal_set_mouseposz(int32_t value) {
+  
+  _impl_.mouseposz_ = value;
+}
+inline void PlayerInput::set_mouseposz(int32_t value) {
+  _internal_set_mouseposz(value);
+  // @@protoc_insertion_point(field_set:Proto.Message.PlayerInput.mousePosZ)
+}
+
+// bool inputFire = 5;
+inline void PlayerInput::clear_inputfire() {
+  _impl_.inputfire_ = false;
+}
+inline bool PlayerInput::_internal_inputfire() const {
+  return _impl_.inputfire_;
+}
+inline bool PlayerInput::inputfire() const {
+  // @@protoc_insertion_point(field_get:Proto.Message.PlayerInput.inputFire)
+  return _internal_inputfire();
+}
+inline void PlayerInput::_internal_set_inputfire(bool value) {
+  
+  _impl_.inputfire_ = value;
+}
+inline void PlayerInput::set_inputfire(bool value) {
+  _internal_set_inputfire(value);
+  // @@protoc_insertion_point(field_set:Proto.Message.PlayerInput.inputFire)
+}
+
+// int32 skillId = 6;
+inline void PlayerInput::clear_skillid() {
+  _impl_.skillid_ = 0;
+}
+inline int32_t PlayerInput::_internal_skillid() const {
+  return _impl_.skillid_;
+}
+inline int32_t PlayerInput::skillid() const {
+  // @@protoc_insertion_point(field_get:Proto.Message.PlayerInput.skillId)
+  return _internal_skillid();
+}
+inline void PlayerInput::_internal_set_skillid(int32_t value) {
+  
+  _impl_.skillid_ = value;
+}
+inline void PlayerInput::set_skillid(int32_t value) {
+  _internal_set_skillid(value);
+  // @@protoc_insertion_point(field_set:Proto.Message.PlayerInput.skillId)
+}
+
+// bool inputSpeedUp = 7;
+inline void PlayerInput::clear_inputspeedup() {
+  _impl_.inputspeedup_ = false;
+}
+inline bool PlayerInput::_internal_inputspeedup() const {
+  return _impl_.inputspeedup_;
+}
+inline bool PlayerInput::inputspeedup() const {
+  // @@protoc_insertion_point(field_get:Proto.Message.PlayerInput.inputSpeedUp)
+  return _internal_inputspeedup();
+}
+inline void PlayerInput::_internal_set_inputspeedup(bool value) {
+  
+  _impl_.inputspeedup_ = value;
+}
+inline void PlayerInput::set_inputspeedup(bool value) {
+  _internal_set_inputspeedup(value);
+  // @@protoc_insertion_point(field_set:Proto.Message.PlayerInput.inputSpeedUp)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

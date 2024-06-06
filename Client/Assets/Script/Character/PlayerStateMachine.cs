@@ -256,7 +256,7 @@ public class PlayerStateMachine : MonoBehaviour {
 		_states = new PlayerStateFactory(this);
 		_currentState = _states.Grouded();
 		_currentState.EnterState();
-		
+        
 		InputManager.Input.Character.Movement.started += onMovementInput;
 		InputManager.Input.Character.Movement.performed += onMovementInput;
 		InputManager.Input.Character.Movement.canceled += onMovementInput;

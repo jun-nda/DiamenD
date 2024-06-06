@@ -25,7 +25,7 @@ public class GameEntity : MonoBehaviour
 			SpaceEntitySyncRequest req = new SpaceEntitySyncRequest();
 			//req.EntitySync.Entity
 			//Position,Direction,entityID
-			// req.EntitySync
+			// req.EntitySyncTFLH
 
 			yield return new WaitForSeconds(0.1f);
 		}

@@ -602,6 +602,120 @@ typedef struct UserLoginResponse__storage_ {
 
 @end
 
+#pragma mark - PlayerInput
+
+@implementation PlayerInput
+
+@dynamic inputX;
+@dynamic inputZ;
+@dynamic mousePosX;
+@dynamic mousePosZ;
+@dynamic inputFire;
+@dynamic skillId;
+@dynamic inputSpeedUp;
+
+typedef struct PlayerInput__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t inputX;
+  int32_t inputZ;
+  int32_t mousePosX;
+  int32_t mousePosZ;
+  int32_t skillId;
+} PlayerInput__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "inputX",
+        .dataTypeSpecific.clazz = Nil,
+        .number = PlayerInput_FieldNumber_InputX,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(PlayerInput__storage_, inputX),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "inputZ",
+        .dataTypeSpecific.clazz = Nil,
+        .number = PlayerInput_FieldNumber_InputZ,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(PlayerInput__storage_, inputZ),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "mousePosX",
+        .dataTypeSpecific.clazz = Nil,
+        .number = PlayerInput_FieldNumber_MousePosX,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(PlayerInput__storage_, mousePosX),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "mousePosZ",
+        .dataTypeSpecific.clazz = Nil,
+        .number = PlayerInput_FieldNumber_MousePosZ,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(PlayerInput__storage_, mousePosZ),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "inputFire",
+        .dataTypeSpecific.clazz = Nil,
+        .number = PlayerInput_FieldNumber_InputFire,
+        .hasIndex = 4,
+        .offset = 5,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "skillId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = PlayerInput_FieldNumber_SkillId,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(PlayerInput__storage_, skillId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "inputSpeedUp",
+        .dataTypeSpecific.clazz = Nil,
+        .number = PlayerInput_FieldNumber_InputSpeedUp,
+        .hasIndex = 7,
+        .offset = 8,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PlayerInput class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PlayerInput__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\007\001\006\000\002\006\000\003\t\000\004\t\000\005\t\000\006\007\000\007\014\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

@@ -6,6 +6,7 @@ using Summer.Network;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class NetStart : MonoBehaviour {
     
@@ -38,8 +39,8 @@ public class NetStart : MonoBehaviour {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 GameObject.Find("EnterGame").SetActive(false);
-                GameObject prefab = Resources.Load<GameObject>("Prefabs/DogPBR");
-                GameObject hero = Instantiate(prefab);
+                GameObject prefab = Resources.Load<GameObject>("Prefabs/Jammo");
+                GameObject hero = spawnPlayer(prefab);
                 hero.name = "Character(Player)";
                 hero.GetComponent<GameEntity>().isMine = true;
                 hero.GetComponent<GameEntity>()?.SetData(e);
@@ -57,8 +58,8 @@ public class NetStart : MonoBehaviour {
         // 加载预制体
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
         {
-            GameObject prefab = Resources.Load<GameObject>("Prefabs/DogPBR");
-            GameObject hero = Instantiate(prefab);
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/Jammo");
+            GameObject hero = spawnPlayer(prefab);
             hero.name = "Character-" + e.Id;
             hero.GetComponent<GameEntity>()?.SetData(e);
             hero.GetComponent<GameEntity>().isMine = false;
@@ -81,5 +82,12 @@ public class NetStart : MonoBehaviour {
 
     void OnApplicationQuit () {
         NetClient.Close();
+    }
+
+    private GameObject spawnPlayer( GameObject prefab)
+    {
+        GameObject hero = Instantiate(prefab);
+
+        return hero;
     }
 }

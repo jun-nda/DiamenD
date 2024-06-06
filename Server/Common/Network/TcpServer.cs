@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using Google.Protobuf;
 using Summer.Network;
@@ -16,7 +17,7 @@ namespace Summer
 
 
         public delegate void ConnectedCallback(Connection conn);
-        public delegate void DataReceivedCallback(Connection conn, IMessage msg);
+        public delegate void DataReceivedCallback(Connection conn, IMessage data);
         public delegate void DisConnectedCallback(Connection conn);
 
 

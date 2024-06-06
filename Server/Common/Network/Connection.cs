@@ -1,4 +1,5 @@
-﻿using Google.Protobuf;
+﻿using System;
+using Google.Protobuf;
 using Proto;
 using Summer.Core;
 using System.Net.Sockets;
@@ -9,7 +10,7 @@ namespace Summer.Network
     /// 客户端网络连接对象
     /// 职责：发送消息，接受消息回调，关闭连接，断开回调
     /// </summary>
-    public class Connection
+    public class Connection : TypeAttributeStore
     {
         public delegate void DataReceivedCallback(Connection sender, IMessage msg);
         public delegate void DisconnectedCallback(Connection sender);

@@ -2,7 +2,10 @@
 using Summer.Network;
 using System.Net;
 using System.Net.Sockets;
+using GameServer.Network;
+using GameServer.Service;
 using Proto;
+using Serilog;
 
 namespace Summer
 {
@@ -10,21 +13,31 @@ namespace Summer
     {
         static void Main(string[] args)
         {
+            //初始化日志环境 
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .WriteTo.File("logs\\log.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+            Log.Information("start");
+            
+            //网路服务模块
             NetService netService = new NetService();
             netService.Start();
+            Log.Debug("网络服务启动完成");
 
-            MessageRouter.Instance.Start(4);
+            UserService userService = UserService.Instance;
+            userService.Start();
+            Log.Debug("玩家服务启动完成");
 
-            // 消息订阅
-            MessageRouter.Instance.On<UserLoginRequest>(OnUerLoginRequest);
+            RoomService roomService = RoomService.Instance;
+            roomService.Start();
+            Log.Debug("房间服务启动完成");
 
+            LockStepService lockStepService = LockStepService.Instance;
+            lockStepService.Start();
+            
             Console.ReadKey();
-        }
-
-        // 当消息分发器发现了.... 回调
-        private static void OnUerLoginRequest(Connection sender, UserLoginRequest msg)
-        {
-            Console.WriteLine("发现用户登录请求: {0}, {1}", msg.Username, msg.Password);
         }
     }
 }

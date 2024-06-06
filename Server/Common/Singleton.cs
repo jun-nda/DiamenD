@@ -1,6 +1,6 @@
-﻿namespace Common
+﻿namespace Summer
 {
-    public class SingleTon<T> where T : new()
+    public class Singleton<T> where T : new()
     {
         private static T m_Instance;
         public static T Instance

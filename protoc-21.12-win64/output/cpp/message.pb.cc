@@ -151,9 +151,28 @@ struct UserLoginResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UserLoginResponseDefaultTypeInternal _UserLoginResponse_default_instance_;
+PROTOBUF_CONSTEXPR PlayerInput::PlayerInput(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.inputx_)*/0
+  , /*decltype(_impl_.inputz_)*/0
+  , /*decltype(_impl_.mouseposx_)*/0
+  , /*decltype(_impl_.mouseposz_)*/0
+  , /*decltype(_impl_.skillid_)*/0
+  , /*decltype(_impl_.inputfire_)*/false
+  , /*decltype(_impl_.inputspeedup_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct PlayerInputDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PlayerInputDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PlayerInputDefaultTypeInternal() {}
+  union {
+    PlayerInput _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlayerInputDefaultTypeInternal _PlayerInput_default_instance_;
 }  // namespace Message
 }  // namespace Proto
-static ::_pb::Metadata file_level_metadata_message_2eproto[9];
+static ::_pb::Metadata file_level_metadata_message_2eproto[10];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_message_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_message_2eproto = nullptr;
 
@@ -233,6 +252,19 @@ const uint32_t TableStruct_message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Proto::Message::UserLoginResponse, _impl_.code_),
   PROTOBUF_FIELD_OFFSET(::Proto::Message::UserLoginResponse, _impl_.message_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Proto::Message::PlayerInput, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Proto::Message::PlayerInput, _impl_.inputx_),
+  PROTOBUF_FIELD_OFFSET(::Proto::Message::PlayerInput, _impl_.inputz_),
+  PROTOBUF_FIELD_OFFSET(::Proto::Message::PlayerInput, _impl_.mouseposx_),
+  PROTOBUF_FIELD_OFFSET(::Proto::Message::PlayerInput, _impl_.mouseposz_),
+  PROTOBUF_FIELD_OFFSET(::Proto::Message::PlayerInput, _impl_.inputfire_),
+  PROTOBUF_FIELD_OFFSET(::Proto::Message::PlayerInput, _impl_.skillid_),
+  PROTOBUF_FIELD_OFFSET(::Proto::Message::PlayerInput, _impl_.inputspeedup_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Proto::Message::Vector3)},
@@ -244,6 +276,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 51, -1, -1, sizeof(::Proto::Message::UserRegisterResponse)},
   { 59, -1, -1, sizeof(::Proto::Message::UserLoginRequest)},
   { 67, -1, -1, sizeof(::Proto::Message::UserLoginResponse)},
+  { 75, -1, -1, sizeof(::Proto::Message::PlayerInput)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -256,6 +289,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::Proto::Message::_UserRegisterResponse_default_instance_._instance,
   &::Proto::Message::_UserLoginRequest_default_instance_._instance,
   &::Proto::Message::_UserLoginResponse_default_instance_._instance,
+  &::Proto::Message::_PlayerInput_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_message_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -277,14 +311,17 @@ const char descriptor_table_protodef_message_2eproto[] PROTOBUF_SECTION_VARIABLE
   "erRegisterResponse\022\014\n\004code\030\001 \001(\005\022\017\n\007mess"
   "age\030\002 \001(\t\"6\n\020UserLoginRequest\022\020\n\010usernam"
   "e\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"2\n\021UserLoginRe"
-  "sponse\022\014\n\004code\030\001 \001(\005\022\017\n\007message\030\002 \001(\tb\006p"
-  "roto3"
+  "sponse\022\014\n\004code\030\001 \001(\005\022\017\n\007message\030\002 \001(\t\"\215\001"
+  "\n\013PlayerInput\022\016\n\006inputX\030\001 \001(\005\022\016\n\006inputZ\030"
+  "\002 \001(\005\022\021\n\tmousePosX\030\003 \001(\005\022\021\n\tmousePosZ\030\004 "
+  "\001(\005\022\021\n\tinputFire\030\005 \001(\010\022\017\n\007skillId\030\006 \001(\005\022"
+  "\024\n\014inputSpeedUp\030\007 \001(\010b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_message_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_message_2eproto = {
-    false, false, 765, descriptor_table_protodef_message_2eproto,
+    false, false, 909, descriptor_table_protodef_message_2eproto,
     "message.proto",
-    &descriptor_table_message_2eproto_once, nullptr, 0, 9,
+    &descriptor_table_message_2eproto_once, nullptr, 0, 10,
     schemas, file_default_instances, TableStruct_message_2eproto::offsets,
     file_level_metadata_message_2eproto, file_level_enum_descriptors_message_2eproto,
     file_level_service_descriptors_message_2eproto,
@@ -2509,6 +2546,337 @@ void UserLoginResponse::InternalSwap(UserLoginResponse* other) {
       file_level_metadata_message_2eproto[8]);
 }
 
+// ===================================================================
+
+class PlayerInput::_Internal {
+ public:
+};
+
+PlayerInput::PlayerInput(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Proto.Message.PlayerInput)
+}
+PlayerInput::PlayerInput(const PlayerInput& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  PlayerInput* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.inputx_){}
+    , decltype(_impl_.inputz_){}
+    , decltype(_impl_.mouseposx_){}
+    , decltype(_impl_.mouseposz_){}
+    , decltype(_impl_.skillid_){}
+    , decltype(_impl_.inputfire_){}
+    , decltype(_impl_.inputspeedup_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.inputx_, &from._impl_.inputx_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.inputspeedup_) -
+    reinterpret_cast<char*>(&_impl_.inputx_)) + sizeof(_impl_.inputspeedup_));
+  // @@protoc_insertion_point(copy_constructor:Proto.Message.PlayerInput)
+}
+
+inline void PlayerInput::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.inputx_){0}
+    , decltype(_impl_.inputz_){0}
+    , decltype(_impl_.mouseposx_){0}
+    , decltype(_impl_.mouseposz_){0}
+    , decltype(_impl_.skillid_){0}
+    , decltype(_impl_.inputfire_){false}
+    , decltype(_impl_.inputspeedup_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+PlayerInput::~PlayerInput() {
+  // @@protoc_insertion_point(destructor:Proto.Message.PlayerInput)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void PlayerInput::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void PlayerInput::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void PlayerInput::Clear() {
+// @@protoc_insertion_point(message_clear_start:Proto.Message.PlayerInput)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.inputx_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.inputspeedup_) -
+      reinterpret_cast<char*>(&_impl_.inputx_)) + sizeof(_impl_.inputspeedup_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* PlayerInput::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 inputX = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.inputx_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 inputZ = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.inputz_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 mousePosX = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.mouseposx_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 mousePosZ = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.mouseposz_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool inputFire = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          _impl_.inputfire_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 skillId = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
+          _impl_.skillid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool inputSpeedUp = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 56)) {
+          _impl_.inputspeedup_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* PlayerInput::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Proto.Message.PlayerInput)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 inputX = 1;
+  if (this->_internal_inputx() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_inputx(), target);
+  }
+
+  // int32 inputZ = 2;
+  if (this->_internal_inputz() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_inputz(), target);
+  }
+
+  // int32 mousePosX = 3;
+  if (this->_internal_mouseposx() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_mouseposx(), target);
+  }
+
+  // int32 mousePosZ = 4;
+  if (this->_internal_mouseposz() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_mouseposz(), target);
+  }
+
+  // bool inputFire = 5;
+  if (this->_internal_inputfire() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(5, this->_internal_inputfire(), target);
+  }
+
+  // int32 skillId = 6;
+  if (this->_internal_skillid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(6, this->_internal_skillid(), target);
+  }
+
+  // bool inputSpeedUp = 7;
+  if (this->_internal_inputspeedup() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(7, this->_internal_inputspeedup(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Proto.Message.PlayerInput)
+  return target;
+}
+
+size_t PlayerInput::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Proto.Message.PlayerInput)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 inputX = 1;
+  if (this->_internal_inputx() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_inputx());
+  }
+
+  // int32 inputZ = 2;
+  if (this->_internal_inputz() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_inputz());
+  }
+
+  // int32 mousePosX = 3;
+  if (this->_internal_mouseposx() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_mouseposx());
+  }
+
+  // int32 mousePosZ = 4;
+  if (this->_internal_mouseposz() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_mouseposz());
+  }
+
+  // int32 skillId = 6;
+  if (this->_internal_skillid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_skillid());
+  }
+
+  // bool inputFire = 5;
+  if (this->_internal_inputfire() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool inputSpeedUp = 7;
+  if (this->_internal_inputspeedup() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PlayerInput::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    PlayerInput::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PlayerInput::GetClassData() const { return &_class_data_; }
+
+
+void PlayerInput::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<PlayerInput*>(&to_msg);
+  auto& from = static_cast<const PlayerInput&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Proto.Message.PlayerInput)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_inputx() != 0) {
+    _this->_internal_set_inputx(from._internal_inputx());
+  }
+  if (from._internal_inputz() != 0) {
+    _this->_internal_set_inputz(from._internal_inputz());
+  }
+  if (from._internal_mouseposx() != 0) {
+    _this->_internal_set_mouseposx(from._internal_mouseposx());
+  }
+  if (from._internal_mouseposz() != 0) {
+    _this->_internal_set_mouseposz(from._internal_mouseposz());
+  }
+  if (from._internal_skillid() != 0) {
+    _this->_internal_set_skillid(from._internal_skillid());
+  }
+  if (from._internal_inputfire() != 0) {
+    _this->_internal_set_inputfire(from._internal_inputfire());
+  }
+  if (from._internal_inputspeedup() != 0) {
+    _this->_internal_set_inputspeedup(from._internal_inputspeedup());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void PlayerInput::CopyFrom(const PlayerInput& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Proto.Message.PlayerInput)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PlayerInput::IsInitialized() const {
+  return true;
+}
+
+void PlayerInput::InternalSwap(PlayerInput* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PlayerInput, _impl_.inputspeedup_)
+      + sizeof(PlayerInput::_impl_.inputspeedup_)
+      - PROTOBUF_FIELD_OFFSET(PlayerInput, _impl_.inputx_)>(
+          reinterpret_cast<char*>(&_impl_.inputx_),
+          reinterpret_cast<char*>(&other->_impl_.inputx_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata PlayerInput::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
+      file_level_metadata_message_2eproto[9]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace Message
 }  // namespace Proto
@@ -2548,6 +2916,10 @@ Arena::CreateMaybeMessage< ::Proto::Message::UserLoginRequest >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::Proto::Message::UserLoginResponse*
 Arena::CreateMaybeMessage< ::Proto::Message::UserLoginResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Proto::Message::UserLoginResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Proto::Message::PlayerInput*
+Arena::CreateMaybeMessage< ::Proto::Message::PlayerInput >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Proto::Message::PlayerInput >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

@@ -49,3 +49,13 @@ message UserLoginResponse{
 	int32 code = 1;
 	string message = 2;
 }
+
+message PlayerInput{
+	int32 inputX = 1;
+	int32 inputZ = 2;
+	int32 mousePosX = 3;
+	int32 mousePosZ = 4;
+	bool inputFire = 5;
+	int32 skillId = 6;
+	bool inputSpeedUp = 7;
+}
