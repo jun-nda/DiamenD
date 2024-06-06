@@ -27,15 +27,36 @@
 
 CF_EXTERN_C_BEGIN
 
-@class Request;
-@class Response;
-@class UserLoginRequest;
-@class UserLoginResponse;
-@class UserRegisterRequest;
-@class UserRegisterResponse;
-@class Vector3;
+@class NCharacter;
+@class NEntity;
+@class NEntitySync;
+@class NVector3;
 
 NS_ASSUME_NONNULL_BEGIN
+
+#pragma mark - Enum EntityState
+
+/** 实体状态 */
+typedef GPB_ENUM(EntityState) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  EntityState_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  EntityState_None = 0,
+  EntityState_Idle = 1,
+  EntityState_Move = 2,
+  EntityState_Jump = 3,
+};
+
+GPBEnumDescriptor *EntityState_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL EntityState_IsValidValue(int32_t value);
 
 #pragma mark - MessageRoot
 
@@ -52,15 +73,27 @@ NS_ASSUME_NONNULL_BEGIN
 GPB_FINAL @interface MessageRoot : GPBRootObject
 @end
 
-#pragma mark - Vector3
+#pragma mark - HeartBeatRequest
 
-typedef GPB_ENUM(Vector3_FieldNumber) {
-  Vector3_FieldNumber_X = 1,
-  Vector3_FieldNumber_Y = 2,
-  Vector3_FieldNumber_Z = 3,
+GPB_FINAL @interface HeartBeatRequest : GPBMessage
+
+@end
+
+#pragma mark - HeartBeatResponse
+
+GPB_FINAL @interface HeartBeatResponse : GPBMessage
+
+@end
+
+#pragma mark - NVector3
+
+typedef GPB_ENUM(NVector3_FieldNumber) {
+  NVector3_FieldNumber_X = 1,
+  NVector3_FieldNumber_Y = 2,
+  NVector3_FieldNumber_Z = 3,
 };
 
-GPB_FINAL @interface Vector3 : GPBMessage
+GPB_FINAL @interface NVector3 : GPBMessage
 
 @property(nonatomic, readwrite) int32_t x;
 
@@ -70,85 +103,199 @@ GPB_FINAL @interface Vector3 : GPBMessage
 
 @end
 
-#pragma mark - Entity
+#pragma mark - NEntity
 
-typedef GPB_ENUM(Entity_FieldNumber) {
-  Entity_FieldNumber_Id_p = 1,
-  Entity_FieldNumber_Speed = 2,
-  Entity_FieldNumber_Position = 3,
-  Entity_FieldNumber_Rotation = 4,
+typedef GPB_ENUM(NEntity_FieldNumber) {
+  NEntity_FieldNumber_Id_p = 1,
+  NEntity_FieldNumber_Position = 2,
+  NEntity_FieldNumber_Direction = 3,
 };
 
-GPB_FINAL @interface Entity : GPBMessage
+/**
+ * 实体信息
+ **/
+GPB_FINAL @interface NEntity : GPBMessage
 
 @property(nonatomic, readwrite) int32_t id_p;
 
-@property(nonatomic, readwrite) int32_t speed;
-
-@property(nonatomic, readwrite, strong, null_resettable) Vector3 *position;
+@property(nonatomic, readwrite, strong, null_resettable) NVector3 *position;
 /** Test to see if @c position has been set. */
 @property(nonatomic, readwrite) BOOL hasPosition;
 
-@property(nonatomic, readwrite, strong, null_resettable) Vector3 *rotation;
-/** Test to see if @c rotation has been set. */
-@property(nonatomic, readwrite) BOOL hasRotation;
+@property(nonatomic, readwrite, strong, null_resettable) NVector3 *direction;
+/** Test to see if @c direction has been set. */
+@property(nonatomic, readwrite) BOOL hasDirection;
 
 @end
 
-#pragma mark - Package
+#pragma mark - NCharacter
 
-typedef GPB_ENUM(Package_FieldNumber) {
-  Package_FieldNumber_Request = 1,
-  Package_FieldNumber_Response = 2,
+typedef GPB_ENUM(NCharacter_FieldNumber) {
+  NCharacter_FieldNumber_Id_p = 1,
+  NCharacter_FieldNumber_TypeId = 2,
+  NCharacter_FieldNumber_EntityId = 3,
+  NCharacter_FieldNumber_Name = 4,
+  NCharacter_FieldNumber_Level = 5,
+  NCharacter_FieldNumber_Exp = 6,
+  NCharacter_FieldNumber_SpaceId = 7,
+  NCharacter_FieldNumber_Gold = 8,
+  NCharacter_FieldNumber_Entity = 9,
+  NCharacter_FieldNumber_Hp = 10,
+  NCharacter_FieldNumber_Mp = 11,
 };
 
-GPB_FINAL @interface Package : GPBMessage
+/**
+ * 角色信息
+ **/
+GPB_FINAL @interface NCharacter : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Request *request;
-/** Test to see if @c request has been set. */
-@property(nonatomic, readwrite) BOOL hasRequest;
+@property(nonatomic, readwrite) int32_t id_p;
 
-@property(nonatomic, readwrite, strong, null_resettable) Response *response;
-/** Test to see if @c response has been set. */
-@property(nonatomic, readwrite) BOOL hasResponse;
+/** 角色类型 */
+@property(nonatomic, readwrite) int32_t typeId;
+
+@property(nonatomic, readwrite) int32_t entityId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@property(nonatomic, readwrite) int32_t level;
+
+@property(nonatomic, readwrite) int64_t exp;
+
+@property(nonatomic, readwrite) int32_t spaceId;
+
+@property(nonatomic, readwrite) int64_t gold;
+
+@property(nonatomic, readwrite, strong, null_resettable) NEntity *entity;
+/** Test to see if @c entity has been set. */
+@property(nonatomic, readwrite) BOOL hasEntity;
+
+@property(nonatomic, readwrite) int32_t hp;
+
+@property(nonatomic, readwrite) int32_t mp;
 
 @end
 
-#pragma mark - Request
+#pragma mark - NEntitySync
 
-typedef GPB_ENUM(Request_FieldNumber) {
-  Request_FieldNumber_UserRegister = 1,
-  Request_FieldNumber_UserLogin = 2,
+typedef GPB_ENUM(NEntitySync_FieldNumber) {
+  NEntitySync_FieldNumber_Entity = 1,
+  NEntitySync_FieldNumber_State = 2,
 };
 
-GPB_FINAL @interface Request : GPBMessage
+GPB_FINAL @interface NEntitySync : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UserRegisterRequest *userRegister;
-/** Test to see if @c userRegister has been set. */
-@property(nonatomic, readwrite) BOOL hasUserRegister;
+@property(nonatomic, readwrite, strong, null_resettable) NEntity *entity;
+/** Test to see if @c entity has been set. */
+@property(nonatomic, readwrite) BOOL hasEntity;
 
-@property(nonatomic, readwrite, strong, null_resettable) UserLoginRequest *userLogin;
-/** Test to see if @c userLogin has been set. */
-@property(nonatomic, readwrite) BOOL hasUserLogin;
+@property(nonatomic, readwrite) EntityState state;
 
 @end
 
-#pragma mark - Response
+/**
+ * Fetches the raw value of a @c NEntitySync's @c state property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t NEntitySync_State_RawValue(NEntitySync *message);
+/**
+ * Sets the raw value of an @c NEntitySync's @c state property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetNEntitySync_State_RawValue(NEntitySync *message, int32_t value);
 
-typedef GPB_ENUM(Response_FieldNumber) {
-  Response_FieldNumber_UserRegister = 1,
-  Response_FieldNumber_UserLogin = 2,
+#pragma mark - SpaceEntitySyncRequest
+
+typedef GPB_ENUM(SpaceEntitySyncRequest_FieldNumber) {
+  SpaceEntitySyncRequest_FieldNumber_EntitySync = 1,
 };
 
-GPB_FINAL @interface Response : GPBMessage
+GPB_FINAL @interface SpaceEntitySyncRequest : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UserRegisterResponse *userRegister;
-/** Test to see if @c userRegister has been set. */
-@property(nonatomic, readwrite) BOOL hasUserRegister;
+@property(nonatomic, readwrite, strong, null_resettable) NEntitySync *entitySync;
+/** Test to see if @c entitySync has been set. */
+@property(nonatomic, readwrite) BOOL hasEntitySync;
 
-@property(nonatomic, readwrite, strong, null_resettable) UserLoginResponse *userLogin;
-/** Test to see if @c userLogin has been set. */
-@property(nonatomic, readwrite) BOOL hasUserLogin;
+@end
+
+#pragma mark - SpaceEntitySyncResponse
+
+typedef GPB_ENUM(SpaceEntitySyncResponse_FieldNumber) {
+  SpaceEntitySyncResponse_FieldNumber_EntitySync = 1,
+};
+
+GPB_FINAL @interface SpaceEntitySyncResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NEntitySync *entitySync;
+/** Test to see if @c entitySync has been set. */
+@property(nonatomic, readwrite) BOOL hasEntitySync;
+
+@end
+
+#pragma mark - GameEnterRequest
+
+typedef GPB_ENUM(GameEnterRequest_FieldNumber) {
+  GameEnterRequest_FieldNumber_CharacterId = 1,
+};
+
+GPB_FINAL @interface GameEnterRequest : GPBMessage
+
+@property(nonatomic, readwrite) int32_t characterId;
+
+@end
+
+#pragma mark - GameEnterResponse
+
+typedef GPB_ENUM(GameEnterResponse_FieldNumber) {
+  GameEnterResponse_FieldNumber_Success = 1,
+  GameEnterResponse_FieldNumber_Entity = 2,
+  GameEnterResponse_FieldNumber_Character = 3,
+};
+
+/**
+ * 加入游戏的响应
+ **/
+GPB_FINAL @interface GameEnterResponse : GPBMessage
+
+@property(nonatomic, readwrite) BOOL success;
+
+@property(nonatomic, readwrite, strong, null_resettable) NEntity *entity;
+/** Test to see if @c entity has been set. */
+@property(nonatomic, readwrite) BOOL hasEntity;
+
+@property(nonatomic, readwrite, strong, null_resettable) NCharacter *character;
+/** Test to see if @c character has been set. */
+@property(nonatomic, readwrite) BOOL hasCharacter;
+
+@end
+
+#pragma mark - SpaceCharactersEnterResponse
+
+typedef GPB_ENUM(SpaceCharactersEnterResponse_FieldNumber) {
+  SpaceCharactersEnterResponse_FieldNumber_SpaceId = 1,
+  SpaceCharactersEnterResponse_FieldNumber_CharacterListArray = 2,
+};
+
+GPB_FINAL @interface SpaceCharactersEnterResponse : GPBMessage
+
+@property(nonatomic, readwrite) int32_t spaceId;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NCharacter*> *characterListArray;
+/** The number of items in @c characterListArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger characterListArray_Count;
+
+@end
+
+#pragma mark - SpaceCharacterLeaveResponse
+
+typedef GPB_ENUM(SpaceCharacterLeaveResponse_FieldNumber) {
+  SpaceCharacterLeaveResponse_FieldNumber_EntityId = 1,
+};
+
+GPB_FINAL @interface SpaceCharacterLeaveResponse : GPBMessage
+
+@property(nonatomic, readwrite) int32_t entityId;
 
 @end
 
@@ -202,11 +349,139 @@ GPB_FINAL @interface UserLoginRequest : GPBMessage
 typedef GPB_ENUM(UserLoginResponse_FieldNumber) {
   UserLoginResponse_FieldNumber_Code = 1,
   UserLoginResponse_FieldNumber_Message = 2,
+  UserLoginResponse_FieldNumber_Success = 3,
 };
 
 GPB_FINAL @interface UserLoginResponse : GPBMessage
 
+@property(nonatomic, readwrite) BOOL success;
+
 @property(nonatomic, readwrite) int32_t code;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *message;
+
+@end
+
+#pragma mark - EntitySyncResponse
+
+typedef GPB_ENUM(EntitySyncResponse_FieldNumber) {
+  EntitySyncResponse_FieldNumber_EntityListArray = 1,
+};
+
+GPB_FINAL @interface EntitySyncResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NEntity*> *entityListArray;
+/** The number of items in @c entityListArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger entityListArray_Count;
+
+@end
+
+#pragma mark - EntityEnterResponse
+
+typedef GPB_ENUM(EntityEnterResponse_FieldNumber) {
+  EntityEnterResponse_FieldNumber_Entity = 1,
+};
+
+GPB_FINAL @interface EntityEnterResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NEntity *entity;
+/** Test to see if @c entity has been set. */
+@property(nonatomic, readwrite) BOOL hasEntity;
+
+@end
+
+#pragma mark - CharacterCreateRequest
+
+typedef GPB_ENUM(CharacterCreateRequest_FieldNumber) {
+  CharacterCreateRequest_FieldNumber_Name = 1,
+  CharacterCreateRequest_FieldNumber_JobType = 2,
+};
+
+GPB_FINAL @interface CharacterCreateRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@property(nonatomic, readwrite) int32_t jobType;
+
+@end
+
+#pragma mark - ChracterCreateResponse
+
+typedef GPB_ENUM(ChracterCreateResponse_FieldNumber) {
+  ChracterCreateResponse_FieldNumber_Success = 1,
+  ChracterCreateResponse_FieldNumber_Message = 2,
+  ChracterCreateResponse_FieldNumber_Character = 3,
+};
+
+/**
+ * 创建角色的响应
+ **/
+GPB_FINAL @interface ChracterCreateResponse : GPBMessage
+
+@property(nonatomic, readwrite) BOOL success;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *message;
+
+@property(nonatomic, readwrite, strong, null_resettable) NCharacter *character;
+/** Test to see if @c character has been set. */
+@property(nonatomic, readwrite) BOOL hasCharacter;
+
+@end
+
+#pragma mark - CharacterListRequest
+
+/**
+ * 查询角色列表的请求
+ **/
+GPB_FINAL @interface CharacterListRequest : GPBMessage
+
+@end
+
+#pragma mark - CharacterListResponse
+
+typedef GPB_ENUM(CharacterListResponse_FieldNumber) {
+  CharacterListResponse_FieldNumber_CharacterListArray = 1,
+};
+
+/**
+ * 角色列表的响应
+ **/
+GPB_FINAL @interface CharacterListResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NCharacter*> *characterListArray;
+/** The number of items in @c characterListArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger characterListArray_Count;
+
+@end
+
+#pragma mark - CharacterDeleteRequest
+
+typedef GPB_ENUM(CharacterDeleteRequest_FieldNumber) {
+  CharacterDeleteRequest_FieldNumber_CharacterId = 1,
+};
+
+/**
+ * 删除角色的请求
+ **/
+GPB_FINAL @interface CharacterDeleteRequest : GPBMessage
+
+@property(nonatomic, readwrite) int32_t characterId;
+
+@end
+
+#pragma mark - CharacterDeleteResponse
+
+typedef GPB_ENUM(CharacterDeleteResponse_FieldNumber) {
+  CharacterDeleteResponse_FieldNumber_Success = 1,
+  CharacterDeleteResponse_FieldNumber_Message = 2,
+};
+
+/**
+ * 删除角色的响应
+ **/
+GPB_FINAL @interface CharacterDeleteResponse : GPBMessage
+
+@property(nonatomic, readwrite) BOOL success;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *message;
 

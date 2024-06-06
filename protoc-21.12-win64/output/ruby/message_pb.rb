@@ -5,46 +5,103 @@ require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("message.proto", :syntax => :proto3) do
-    add_message "Proto.Message.Vector3" do
+    add_message "proto.HeartBeatRequest" do
+    end
+    add_message "proto.HeartBeatResponse" do
+    end
+    add_message "proto.NVector3" do
       optional :x, :int32, 1
       optional :y, :int32, 2
       optional :z, :int32, 3
     end
-    add_message "Proto.Message.Entity" do
+    add_message "proto.NEntity" do
       optional :id, :int32, 1
-      optional :speed, :int32, 2
-      optional :position, :message, 3, "Proto.Message.Vector3"
-      optional :rotation, :message, 4, "Proto.Message.Vector3"
+      optional :position, :message, 2, "proto.NVector3"
+      optional :direction, :message, 3, "proto.NVector3"
     end
-    add_message "Proto.Message.Package" do
-      optional :request, :message, 1, "Proto.Message.Request"
-      optional :response, :message, 2, "Proto.Message.Response"
+    add_message "proto.NCharacter" do
+      optional :id, :int32, 1
+      optional :type_id, :int32, 2
+      optional :entity_id, :int32, 3
+      optional :name, :string, 4
+      optional :level, :int32, 5
+      optional :exp, :int64, 6
+      optional :spaceId, :int32, 7
+      optional :gold, :int64, 8
+      optional :entity, :message, 9, "proto.NEntity"
+      optional :hp, :int32, 10
+      optional :mp, :int32, 11
     end
-    add_message "Proto.Message.Request" do
-      optional :userRegister, :message, 1, "Proto.Message.UserRegisterRequest"
-      optional :userLogin, :message, 2, "Proto.Message.UserLoginRequest"
+    add_message "proto.NEntitySync" do
+      optional :entity, :message, 1, "proto.NEntity"
+      optional :state, :enum, 2, "proto.EntityState"
     end
-    add_message "Proto.Message.Response" do
-      optional :userRegister, :message, 1, "Proto.Message.UserRegisterResponse"
-      optional :userLogin, :message, 2, "Proto.Message.UserLoginResponse"
+    add_message "proto.SpaceEntitySyncRequest" do
+      optional :entitySync, :message, 1, "proto.NEntitySync"
     end
-    add_message "Proto.Message.UserRegisterRequest" do
+    add_message "proto.SpaceEntitySyncResponse" do
+      optional :entitySync, :message, 1, "proto.NEntitySync"
+    end
+    add_message "proto.GameEnterRequest" do
+      optional :characterId, :int32, 1
+    end
+    add_message "proto.GameEnterResponse" do
+      optional :success, :bool, 1
+      optional :entity, :message, 2, "proto.NEntity"
+      optional :character, :message, 3, "proto.NCharacter"
+    end
+    add_message "proto.SpaceCharactersEnterResponse" do
+      optional :spaceId, :int32, 1
+      repeated :characterList, :message, 2, "proto.NCharacter"
+    end
+    add_message "proto.SpaceCharacterLeaveResponse" do
+      optional :entityId, :int32, 1
+    end
+    add_message "proto.UserRegisterRequest" do
       optional :username, :string, 1
       optional :password, :string, 2
     end
-    add_message "Proto.Message.UserRegisterResponse" do
+    add_message "proto.UserRegisterResponse" do
       optional :code, :int32, 1
       optional :message, :string, 2
     end
-    add_message "Proto.Message.UserLoginRequest" do
+    add_message "proto.UserLoginRequest" do
       optional :username, :string, 1
       optional :password, :string, 2
     end
-    add_message "Proto.Message.UserLoginResponse" do
+    add_message "proto.UserLoginResponse" do
+      optional :success, :bool, 3
       optional :code, :int32, 1
       optional :message, :string, 2
     end
-    add_message "Proto.Message.PlayerInput" do
+    add_message "proto.EntitySyncResponse" do
+      repeated :entityList, :message, 1, "proto.NEntity"
+    end
+    add_message "proto.EntityEnterResponse" do
+      optional :entity, :message, 1, "proto.NEntity"
+    end
+    add_message "proto.CharacterCreateRequest" do
+      optional :name, :string, 1
+      optional :jobType, :int32, 2
+    end
+    add_message "proto.ChracterCreateResponse" do
+      optional :success, :bool, 1
+      optional :message, :string, 2
+      optional :character, :message, 3, "proto.NCharacter"
+    end
+    add_message "proto.CharacterListRequest" do
+    end
+    add_message "proto.CharacterListResponse" do
+      repeated :characterList, :message, 1, "proto.NCharacter"
+    end
+    add_message "proto.CharacterDeleteRequest" do
+      optional :characterId, :int32, 1
+    end
+    add_message "proto.CharacterDeleteResponse" do
+      optional :success, :bool, 1
+      optional :message, :string, 2
+    end
+    add_message "proto.PlayerInput" do
       optional :inputX, :int32, 1
       optional :inputZ, :int32, 2
       optional :mousePosX, :int32, 3
@@ -53,20 +110,40 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :skillId, :int32, 6
       optional :inputSpeedUp, :bool, 7
     end
+    add_enum "proto.EntityState" do
+      value :NONE, 0
+      value :IDLE, 1
+      value :MOVE, 2
+      value :JUMP, 3
+    end
   end
 end
 
 module Proto
-  module Message
-    Vector3 = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.Vector3").msgclass
-    Entity = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.Entity").msgclass
-    Package = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.Package").msgclass
-    Request = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.Request").msgclass
-    Response = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.Response").msgclass
-    UserRegisterRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.UserRegisterRequest").msgclass
-    UserRegisterResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.UserRegisterResponse").msgclass
-    UserLoginRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.UserLoginRequest").msgclass
-    UserLoginResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.UserLoginResponse").msgclass
-    PlayerInput = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Proto.Message.PlayerInput").msgclass
-  end
+  HeartBeatRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.HeartBeatRequest").msgclass
+  HeartBeatResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.HeartBeatResponse").msgclass
+  NVector3 = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.NVector3").msgclass
+  NEntity = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.NEntity").msgclass
+  NCharacter = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.NCharacter").msgclass
+  NEntitySync = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.NEntitySync").msgclass
+  SpaceEntitySyncRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.SpaceEntitySyncRequest").msgclass
+  SpaceEntitySyncResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.SpaceEntitySyncResponse").msgclass
+  GameEnterRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.GameEnterRequest").msgclass
+  GameEnterResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.GameEnterResponse").msgclass
+  SpaceCharactersEnterResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.SpaceCharactersEnterResponse").msgclass
+  SpaceCharacterLeaveResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.SpaceCharacterLeaveResponse").msgclass
+  UserRegisterRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.UserRegisterRequest").msgclass
+  UserRegisterResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.UserRegisterResponse").msgclass
+  UserLoginRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.UserLoginRequest").msgclass
+  UserLoginResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.UserLoginResponse").msgclass
+  EntitySyncResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.EntitySyncResponse").msgclass
+  EntityEnterResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.EntityEnterResponse").msgclass
+  CharacterCreateRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.CharacterCreateRequest").msgclass
+  ChracterCreateResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.ChracterCreateResponse").msgclass
+  CharacterListRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.CharacterListRequest").msgclass
+  CharacterListResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.CharacterListResponse").msgclass
+  CharacterDeleteRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.CharacterDeleteRequest").msgclass
+  CharacterDeleteResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.CharacterDeleteResponse").msgclass
+  PlayerInput = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.PlayerInput").msgclass
+  EntityState = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("proto.EntityState").enummodule
 end

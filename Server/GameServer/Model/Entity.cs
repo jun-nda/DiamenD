@@ -33,12 +33,13 @@ public class Entity
         this.direction = direction;
     }
 
-    public Proto.NEntity GetData()
+    public Proto.NCharacter GetData()
     {
-        var data = new Proto.NEntity();
+        var data = new Proto.NCharacter();
+        data.Entity = new Proto.NEntity();
         data.Id = id;
-        data.Position = new Proto.NVector3() { X = position.x, Y = position.y, Z = position.z };
-        data.Direction = new Proto.NVector3() { X = direction.x, Y = -direction.y, Z = -direction.z };
+        data.Entity.Position = new Proto.NVector3() { X = position.x, Y = position.y, Z = position.z };
+        data.Entity.Direction = new Proto.NVector3() { X = direction.x, Y = -direction.y, Z = -direction.z };
         return data;
     }
     public void SetEntityData(Proto.NEntity entity)

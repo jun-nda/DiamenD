@@ -35,7 +35,7 @@ namespace GameServer.Network
             //通知玩家登录成功
             GameEnterResponse resp = new GameEnterResponse();
             resp.Success = true;
-            resp.Entity = character.GetData();
+            resp.Entity = character.GetData().Entity;
             conn.Send(resp);
             //将新角色加入到地图
             var room = RoomService.Instance.GetRoom(6); //新手村

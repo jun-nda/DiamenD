@@ -37,7 +37,7 @@ namespace GameServer.Model
             //把新进入的角色广播给其他玩家
             var resp = new SpaceCharactersEnterResponse();
             resp.SpaceId = this.Id; //场景ID
-            resp.EntityList.Add(character.GetData());
+            resp.CharacterList.Add(character.GetData());
             foreach(var kv in CharacterDict)
             {
                 if (kv.Value.conn != conn)
@@ -49,8 +49,8 @@ namespace GameServer.Model
             foreach (var kv in CharacterDict)
             {
                 if (kv.Value.conn == conn) continue;
-                resp.EntityList.Clear();
-                resp.EntityList.Add(kv.Value.GetData());
+                resp.CharacterList.Clear();
+                resp.CharacterList.Add(kv.Value.GetData());
                 conn.Send(resp);
             }
             

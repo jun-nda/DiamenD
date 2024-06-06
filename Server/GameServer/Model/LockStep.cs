@@ -9,19 +9,19 @@ public class LockStep
     private float _accmulatedTime = 0f;
     public void Start()
     {
-        while (true)
-        {
-            _remainTime
-            if (_accmulatedTime)
-            _accmulatedTime += DeltaTime;
-
-        }
+        // while (true)
+        // {
+        //     _remainTime
+        //     if (_accmulatedTime)
+        //     _accmulatedTime += DeltaTime;
+        //
+        // }
     }
 
-    private void doUpdate()
-    {
-        _remainTime;
-    }
+    // private void doUpdate()
+    // {
+    //     _remainTime;
+    // }
     
     
     public void Destroy()

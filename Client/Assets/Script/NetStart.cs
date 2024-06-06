@@ -52,8 +52,8 @@ public class NetStart : MonoBehaviour {
     // 当有角色进入地图时候的通知，别人
     private void _SpaceCharactersEnterResponse(Connection conn, 
         SpaceCharactersEnterResponse msg) {
-        Debug.Log("角色加入：地图=" + msg.SpaceId + ",entityId=" + msg.EntityList[0].Id);
-        var e = msg.EntityList[0];
+        Debug.Log("角色加入：地图=" + msg.SpaceId + ",entityId=" + msg.CharacterList[0].Id);
+        var e = msg.CharacterList[0];
         
         // 加载预制体
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
@@ -61,7 +61,7 @@ public class NetStart : MonoBehaviour {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/Jammo");
             GameObject hero = spawnPlayer(prefab);
             hero.name = "Character-" + e.Id;
-            hero.GetComponent<GameEntity>()?.SetData(e);
+            hero.GetComponent<GameEntity>()?.SetData(e.Entity);
             hero.GetComponent<GameEntity>().isMine = false;
         });
     }

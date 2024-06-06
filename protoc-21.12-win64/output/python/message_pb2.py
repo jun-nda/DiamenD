@@ -13,31 +13,63 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rmessage.proto\x12\rProto.Message\"*\n\x07Vector3\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\t\n\x01z\x18\x03 \x01(\x05\"w\n\x06\x45ntity\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05speed\x18\x02 \x01(\x05\x12(\n\x08position\x18\x03 \x01(\x0b\x32\x16.Proto.Message.Vector3\x12(\n\x08rotation\x18\x04 \x01(\x0b\x32\x16.Proto.Message.Vector3\"]\n\x07Package\x12\'\n\x07request\x18\x01 \x01(\x0b\x32\x16.Proto.Message.Request\x12)\n\x08response\x18\x02 \x01(\x0b\x32\x17.Proto.Message.Response\"w\n\x07Request\x12\x38\n\x0cuserRegister\x18\x01 \x01(\x0b\x32\".Proto.Message.UserRegisterRequest\x12\x32\n\tuserLogin\x18\x02 \x01(\x0b\x32\x1f.Proto.Message.UserLoginRequest\"z\n\x08Response\x12\x39\n\x0cuserRegister\x18\x01 \x01(\x0b\x32#.Proto.Message.UserRegisterResponse\x12\x33\n\tuserLogin\x18\x02 \x01(\x0b\x32 .Proto.Message.UserLoginResponse\"9\n\x13UserRegisterRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"5\n\x14UserRegisterResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\"6\n\x10UserLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"2\n\x11UserLoginResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x8d\x01\n\x0bPlayerInput\x12\x0e\n\x06inputX\x18\x01 \x01(\x05\x12\x0e\n\x06inputZ\x18\x02 \x01(\x05\x12\x11\n\tmousePosX\x18\x03 \x01(\x05\x12\x11\n\tmousePosZ\x18\x04 \x01(\x05\x12\x11\n\tinputFire\x18\x05 \x01(\x08\x12\x0f\n\x07skillId\x18\x06 \x01(\x05\x12\x14\n\x0cinputSpeedUp\x18\x07 \x01(\x08\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rmessage.proto\x12\x05proto\"\x12\n\x10HeartBeatRequest\"\x13\n\x11HeartBeatResponse\"+\n\x08NVector3\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\t\n\x01z\x18\x03 \x01(\x05\"\\\n\x07NEntity\x12\n\n\x02id\x18\x01 \x01(\x05\x12!\n\x08position\x18\x02 \x01(\x0b\x32\x0f.proto.NVector3\x12\"\n\tdirection\x18\x03 \x01(\x0b\x32\x0f.proto.NVector3\"\xbd\x01\n\nNCharacter\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07type_id\x18\x02 \x01(\x05\x12\x11\n\tentity_id\x18\x03 \x01(\x05\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\r\n\x05level\x18\x05 \x01(\x05\x12\x0b\n\x03\x65xp\x18\x06 \x01(\x03\x12\x0f\n\x07spaceId\x18\x07 \x01(\x05\x12\x0c\n\x04gold\x18\x08 \x01(\x03\x12\x1e\n\x06\x65ntity\x18\t \x01(\x0b\x32\x0e.proto.NEntity\x12\n\n\x02hp\x18\n \x01(\x05\x12\n\n\x02mp\x18\x0b \x01(\x05\"P\n\x0bNEntitySync\x12\x1e\n\x06\x65ntity\x18\x01 \x01(\x0b\x32\x0e.proto.NEntity\x12!\n\x05state\x18\x02 \x01(\x0e\x32\x12.proto.EntityState\"@\n\x16SpaceEntitySyncRequest\x12&\n\nentitySync\x18\x01 \x01(\x0b\x32\x12.proto.NEntitySync\"A\n\x17SpaceEntitySyncResponse\x12&\n\nentitySync\x18\x01 \x01(\x0b\x32\x12.proto.NEntitySync\"\'\n\x10GameEnterRequest\x12\x13\n\x0b\x63haracterId\x18\x01 \x01(\x05\"j\n\x11GameEnterResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x1e\n\x06\x65ntity\x18\x02 \x01(\x0b\x32\x0e.proto.NEntity\x12$\n\tcharacter\x18\x03 \x01(\x0b\x32\x11.proto.NCharacter\"Y\n\x1cSpaceCharactersEnterResponse\x12\x0f\n\x07spaceId\x18\x01 \x01(\x05\x12(\n\rcharacterList\x18\x02 \x03(\x0b\x32\x11.proto.NCharacter\"/\n\x1bSpaceCharacterLeaveResponse\x12\x10\n\x08\x65ntityId\x18\x01 \x01(\x05\"9\n\x13UserRegisterRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"5\n\x14UserRegisterResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\"6\n\x10UserLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"C\n\x11UserLoginResponse\x12\x0f\n\x07success\x18\x03 \x01(\x08\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\"8\n\x12\x45ntitySyncResponse\x12\"\n\nentityList\x18\x01 \x03(\x0b\x32\x0e.proto.NEntity\"5\n\x13\x45ntityEnterResponse\x12\x1e\n\x06\x65ntity\x18\x01 \x01(\x0b\x32\x0e.proto.NEntity\"7\n\x16\x43haracterCreateRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07jobType\x18\x02 \x01(\x05\"`\n\x16\x43hracterCreateResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12$\n\tcharacter\x18\x03 \x01(\x0b\x32\x11.proto.NCharacter\"\x16\n\x14\x43haracterListRequest\"A\n\x15\x43haracterListResponse\x12(\n\rcharacterList\x18\x01 \x03(\x0b\x32\x11.proto.NCharacter\"-\n\x16\x43haracterDeleteRequest\x12\x13\n\x0b\x63haracterId\x18\x01 \x01(\x05\";\n\x17\x43haracterDeleteResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x8d\x01\n\x0bPlayerInput\x12\x0e\n\x06inputX\x18\x01 \x01(\x05\x12\x0e\n\x06inputZ\x18\x02 \x01(\x05\x12\x11\n\tmousePosX\x18\x03 \x01(\x05\x12\x11\n\tmousePosZ\x18\x04 \x01(\x05\x12\x11\n\tinputFire\x18\x05 \x01(\x08\x12\x0f\n\x07skillId\x18\x06 \x01(\x05\x12\x14\n\x0cinputSpeedUp\x18\x07 \x01(\x08*5\n\x0b\x45ntityState\x12\x08\n\x04NONE\x10\x00\x12\x08\n\x04IDLE\x10\x01\x12\x08\n\x04MOVE\x10\x02\x12\x08\n\x04JUMP\x10\x03\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'message_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _VECTOR3._serialized_start=32
-  _VECTOR3._serialized_end=74
-  _ENTITY._serialized_start=76
-  _ENTITY._serialized_end=195
-  _PACKAGE._serialized_start=197
-  _PACKAGE._serialized_end=290
-  _REQUEST._serialized_start=292
-  _REQUEST._serialized_end=411
-  _RESPONSE._serialized_start=413
-  _RESPONSE._serialized_end=535
-  _USERREGISTERREQUEST._serialized_start=537
-  _USERREGISTERREQUEST._serialized_end=594
-  _USERREGISTERRESPONSE._serialized_start=596
-  _USERREGISTERRESPONSE._serialized_end=649
-  _USERLOGINREQUEST._serialized_start=651
-  _USERLOGINREQUEST._serialized_end=705
-  _USERLOGINRESPONSE._serialized_start=707
-  _USERLOGINRESPONSE._serialized_end=757
-  _PLAYERINPUT._serialized_start=760
-  _PLAYERINPUT._serialized_end=901
+  _ENTITYSTATE._serialized_start=1750
+  _ENTITYSTATE._serialized_end=1803
+  _HEARTBEATREQUEST._serialized_start=24
+  _HEARTBEATREQUEST._serialized_end=42
+  _HEARTBEATRESPONSE._serialized_start=44
+  _HEARTBEATRESPONSE._serialized_end=63
+  _NVECTOR3._serialized_start=65
+  _NVECTOR3._serialized_end=108
+  _NENTITY._serialized_start=110
+  _NENTITY._serialized_end=202
+  _NCHARACTER._serialized_start=205
+  _NCHARACTER._serialized_end=394
+  _NENTITYSYNC._serialized_start=396
+  _NENTITYSYNC._serialized_end=476
+  _SPACEENTITYSYNCREQUEST._serialized_start=478
+  _SPACEENTITYSYNCREQUEST._serialized_end=542
+  _SPACEENTITYSYNCRESPONSE._serialized_start=544
+  _SPACEENTITYSYNCRESPONSE._serialized_end=609
+  _GAMEENTERREQUEST._serialized_start=611
+  _GAMEENTERREQUEST._serialized_end=650
+  _GAMEENTERRESPONSE._serialized_start=652
+  _GAMEENTERRESPONSE._serialized_end=758
+  _SPACECHARACTERSENTERRESPONSE._serialized_start=760
+  _SPACECHARACTERSENTERRESPONSE._serialized_end=849
+  _SPACECHARACTERLEAVERESPONSE._serialized_start=851
+  _SPACECHARACTERLEAVERESPONSE._serialized_end=898
+  _USERREGISTERREQUEST._serialized_start=900
+  _USERREGISTERREQUEST._serialized_end=957
+  _USERREGISTERRESPONSE._serialized_start=959
+  _USERREGISTERRESPONSE._serialized_end=1012
+  _USERLOGINREQUEST._serialized_start=1014
+  _USERLOGINREQUEST._serialized_end=1068
+  _USERLOGINRESPONSE._serialized_start=1070
+  _USERLOGINRESPONSE._serialized_end=1137
+  _ENTITYSYNCRESPONSE._serialized_start=1139
+  _ENTITYSYNCRESPONSE._serialized_end=1195
+  _ENTITYENTERRESPONSE._serialized_start=1197
+  _ENTITYENTERRESPONSE._serialized_end=1250
+  _CHARACTERCREATEREQUEST._serialized_start=1252
+  _CHARACTERCREATEREQUEST._serialized_end=1307
+  _CHRACTERCREATERESPONSE._serialized_start=1309
+  _CHRACTERCREATERESPONSE._serialized_end=1405
+  _CHARACTERLISTREQUEST._serialized_start=1407
+  _CHARACTERLISTREQUEST._serialized_end=1429
+  _CHARACTERLISTRESPONSE._serialized_start=1431
+  _CHARACTERLISTRESPONSE._serialized_end=1496
+  _CHARACTERDELETEREQUEST._serialized_start=1498
+  _CHARACTERDELETEREQUEST._serialized_end=1543
+  _CHARACTERDELETERESPONSE._serialized_start=1545
+  _CHARACTERDELETERESPONSE._serialized_end=1604
+  _PLAYERINPUT._serialized_start=1607
+  _PLAYERINPUT._serialized_end=1748
 # @@protoc_insertion_point(module_scope)

@@ -13,6 +13,8 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
+#import <stdatomic.h>
+
 #import "Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -24,13 +26,10 @@
 // Forward declarations of Objective C classes that we can use as
 // static values in struct initializers.
 // We don't use [Foo class] because it is not a static value.
-GPBObjCClassDeclaration(Request);
-GPBObjCClassDeclaration(Response);
-GPBObjCClassDeclaration(UserLoginRequest);
-GPBObjCClassDeclaration(UserLoginResponse);
-GPBObjCClassDeclaration(UserRegisterRequest);
-GPBObjCClassDeclaration(UserRegisterResponse);
-GPBObjCClassDeclaration(Vector3);
+GPBObjCClassDeclaration(NCharacter);
+GPBObjCClassDeclaration(NEntity);
+GPBObjCClassDeclaration(NEntitySync);
+GPBObjCClassDeclaration(NVector3);
 
 #pragma mark - MessageRoot
 
@@ -49,26 +48,129 @@ static GPBFileDescriptor *MessageRoot_FileDescriptor(void) {
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
     GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
-    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"Proto.Message"
+    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"proto"
                                                      syntax:GPBFileSyntaxProto3];
   }
   return descriptor;
 }
 
-#pragma mark - Vector3
+#pragma mark - Enum EntityState
 
-@implementation Vector3
+GPBEnumDescriptor *EntityState_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "None\000Idle\000Move\000Jump\000";
+    static const int32_t values[] = {
+        EntityState_None,
+        EntityState_Idle,
+        EntityState_Move,
+        EntityState_Jump,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(EntityState)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:EntityState_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL EntityState_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case EntityState_None:
+    case EntityState_Idle:
+    case EntityState_Move:
+    case EntityState_Jump:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
+#pragma mark - HeartBeatRequest
+
+@implementation HeartBeatRequest
+
+
+typedef struct HeartBeatRequest__storage_ {
+  uint32_t _has_storage_[1];
+} HeartBeatRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[HeartBeatRequest class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(HeartBeatRequest__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - HeartBeatResponse
+
+@implementation HeartBeatResponse
+
+
+typedef struct HeartBeatResponse__storage_ {
+  uint32_t _has_storage_[1];
+} HeartBeatResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[HeartBeatResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(HeartBeatResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - NVector3
+
+@implementation NVector3
 
 @dynamic x;
 @dynamic y;
 @dynamic z;
 
-typedef struct Vector3__storage_ {
+typedef struct NVector3__storage_ {
   uint32_t _has_storage_[1];
   int32_t x;
   int32_t y;
   int32_t z;
-} Vector3__storage_;
+} NVector3__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -79,38 +181,38 @@ typedef struct Vector3__storage_ {
       {
         .name = "x",
         .dataTypeSpecific.clazz = Nil,
-        .number = Vector3_FieldNumber_X,
+        .number = NVector3_FieldNumber_X,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Vector3__storage_, x),
+        .offset = (uint32_t)offsetof(NVector3__storage_, x),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
         .name = "y",
         .dataTypeSpecific.clazz = Nil,
-        .number = Vector3_FieldNumber_Y,
+        .number = NVector3_FieldNumber_Y,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Vector3__storage_, y),
+        .offset = (uint32_t)offsetof(NVector3__storage_, y),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
         .name = "z",
         .dataTypeSpecific.clazz = Nil,
-        .number = Vector3_FieldNumber_Z,
+        .number = NVector3_FieldNumber_Z,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(Vector3__storage_, z),
+        .offset = (uint32_t)offsetof(NVector3__storage_, z),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Vector3 class]
+        [GPBDescriptor allocDescriptorForClass:[NVector3 class]
                                      rootClass:[MessageRoot class]
                                           file:MessageRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Vector3__storage_)
+                                   storageSize:sizeof(NVector3__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -122,22 +224,20 @@ typedef struct Vector3__storage_ {
 
 @end
 
-#pragma mark - Entity
+#pragma mark - NEntity
 
-@implementation Entity
+@implementation NEntity
 
 @dynamic id_p;
-@dynamic speed;
 @dynamic hasPosition, position;
-@dynamic hasRotation, rotation;
+@dynamic hasDirection, direction;
 
-typedef struct Entity__storage_ {
+typedef struct NEntity__storage_ {
   uint32_t _has_storage_[1];
   int32_t id_p;
-  int32_t speed;
-  Vector3 *position;
-  Vector3 *rotation;
-} Entity__storage_;
+  NVector3 *position;
+  NVector3 *direction;
+} NEntity__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -148,163 +248,197 @@ typedef struct Entity__storage_ {
       {
         .name = "id_p",
         .dataTypeSpecific.clazz = Nil,
-        .number = Entity_FieldNumber_Id_p,
+        .number = NEntity_FieldNumber_Id_p,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Entity__storage_, id_p),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "speed",
-        .dataTypeSpecific.clazz = Nil,
-        .number = Entity_FieldNumber_Speed,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Entity__storage_, speed),
+        .offset = (uint32_t)offsetof(NEntity__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
         .name = "position",
-        .dataTypeSpecific.clazz = GPBObjCClass(Vector3),
-        .number = Entity_FieldNumber_Position,
+        .dataTypeSpecific.clazz = GPBObjCClass(NVector3),
+        .number = NEntity_FieldNumber_Position,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(NEntity__storage_, position),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "direction",
+        .dataTypeSpecific.clazz = GPBObjCClass(NVector3),
+        .number = NEntity_FieldNumber_Direction,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(Entity__storage_, position),
+        .offset = (uint32_t)offsetof(NEntity__storage_, direction),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[NEntity class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(NEntity__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - NCharacter
+
+@implementation NCharacter
+
+@dynamic id_p;
+@dynamic typeId;
+@dynamic entityId;
+@dynamic name;
+@dynamic level;
+@dynamic exp;
+@dynamic spaceId;
+@dynamic gold;
+@dynamic hasEntity, entity;
+@dynamic hp;
+@dynamic mp;
+
+typedef struct NCharacter__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t id_p;
+  int32_t typeId;
+  int32_t entityId;
+  int32_t level;
+  int32_t spaceId;
+  int32_t hp;
+  int32_t mp;
+  NSString *name;
+  NEntity *entity;
+  int64_t exp;
+  int64_t gold;
+} NCharacter__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
       {
-        .name = "rotation",
-        .dataTypeSpecific.clazz = GPBObjCClass(Vector3),
-        .number = Entity_FieldNumber_Rotation,
+        .name = "id_p",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, id_p),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "typeId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_TypeId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, typeId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "entityId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_EntityId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, entityId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "name",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_Name,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(Entity__storage_, rotation),
+        .offset = (uint32_t)offsetof(NCharacter__storage_, name),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "level",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_Level,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, level),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "exp",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_Exp,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, exp),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_SpaceId,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "gold",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_Gold,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, gold),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "entity",
+        .dataTypeSpecific.clazz = GPBObjCClass(NEntity),
+        .number = NCharacter_FieldNumber_Entity,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, entity),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "hp",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_Hp,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, hp),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "mp",
+        .dataTypeSpecific.clazz = Nil,
+        .number = NCharacter_FieldNumber_Mp,
+        .hasIndex = 10,
+        .offset = (uint32_t)offsetof(NCharacter__storage_, mp),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Entity class]
+        [GPBDescriptor allocDescriptorForClass:[NCharacter class]
                                      rootClass:[MessageRoot class]
                                           file:MessageRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Entity__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - Package
-
-@implementation Package
-
-@dynamic hasRequest, request;
-@dynamic hasResponse, response;
-
-typedef struct Package__storage_ {
-  uint32_t _has_storage_[1];
-  Request *request;
-  Response *response;
-} Package__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "request",
-        .dataTypeSpecific.clazz = GPBObjCClass(Request),
-        .number = Package_FieldNumber_Request,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Package__storage_, request),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "response",
-        .dataTypeSpecific.clazz = GPBObjCClass(Response),
-        .number = Package_FieldNumber_Response,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Package__storage_, response),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Package class]
-                                     rootClass:[MessageRoot class]
-                                          file:MessageRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Package__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - Request
-
-@implementation Request
-
-@dynamic hasUserRegister, userRegister;
-@dynamic hasUserLogin, userLogin;
-
-typedef struct Request__storage_ {
-  uint32_t _has_storage_[1];
-  UserRegisterRequest *userRegister;
-  UserLoginRequest *userLogin;
-} Request__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "userRegister",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserRegisterRequest),
-        .number = Request_FieldNumber_UserRegister,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Request__storage_, userRegister),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "userLogin",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserLoginRequest),
-        .number = Request_FieldNumber_UserLogin,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Request__storage_, userLogin),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Request class]
-                                     rootClass:[MessageRoot class]
-                                          file:MessageRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Request__storage_)
+                                   storageSize:sizeof(NCharacter__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\002\001\014\000\002\t\000";
+        "\001\007\007\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
@@ -317,18 +451,18 @@ typedef struct Request__storage_ {
 
 @end
 
-#pragma mark - Response
+#pragma mark - NEntitySync
 
-@implementation Response
+@implementation NEntitySync
 
-@dynamic hasUserRegister, userRegister;
-@dynamic hasUserLogin, userLogin;
+@dynamic hasEntity, entity;
+@dynamic state;
 
-typedef struct Response__storage_ {
+typedef struct NEntitySync__storage_ {
   uint32_t _has_storage_[1];
-  UserRegisterResponse *userRegister;
-  UserLoginResponse *userLogin;
-} Response__storage_;
+  EntityState state;
+  NEntity *entity;
+} NEntitySync__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -337,35 +471,369 @@ typedef struct Response__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "userRegister",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserRegisterResponse),
-        .number = Response_FieldNumber_UserRegister,
+        .name = "entity",
+        .dataTypeSpecific.clazz = GPBObjCClass(NEntity),
+        .number = NEntitySync_FieldNumber_Entity,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Response__storage_, userRegister),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(NEntitySync__storage_, entity),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "userLogin",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserLoginResponse),
-        .number = Response_FieldNumber_UserLogin,
+        .name = "state",
+        .dataTypeSpecific.enumDescFunc = EntityState_EnumDescriptor,
+        .number = NEntitySync_FieldNumber_State,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Response__storage_, userLogin),
+        .offset = (uint32_t)offsetof(NEntitySync__storage_, state),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[NEntitySync class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(NEntitySync__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t NEntitySync_State_RawValue(NEntitySync *message) {
+  GPBDescriptor *descriptor = [NEntitySync descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:NEntitySync_FieldNumber_State];
+  return GPBGetMessageRawEnumField(message, field);
+}
+
+void SetNEntitySync_State_RawValue(NEntitySync *message, int32_t value) {
+  GPBDescriptor *descriptor = [NEntitySync descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:NEntitySync_FieldNumber_State];
+  GPBSetMessageRawEnumField(message, field, value);
+}
+
+#pragma mark - SpaceEntitySyncRequest
+
+@implementation SpaceEntitySyncRequest
+
+@dynamic hasEntitySync, entitySync;
+
+typedef struct SpaceEntitySyncRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NEntitySync *entitySync;
+} SpaceEntitySyncRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "entitySync",
+        .dataTypeSpecific.clazz = GPBObjCClass(NEntitySync),
+        .number = SpaceEntitySyncRequest_FieldNumber_EntitySync,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SpaceEntitySyncRequest__storage_, entitySync),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Response class]
+        [GPBDescriptor allocDescriptorForClass:[SpaceEntitySyncRequest class]
                                      rootClass:[MessageRoot class]
                                           file:MessageRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Response__storage_)
+                                   storageSize:sizeof(SpaceEntitySyncRequest__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\002\001\014\000\002\t\000";
+        "\001\001\n\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SpaceEntitySyncResponse
+
+@implementation SpaceEntitySyncResponse
+
+@dynamic hasEntitySync, entitySync;
+
+typedef struct SpaceEntitySyncResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NEntitySync *entitySync;
+} SpaceEntitySyncResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "entitySync",
+        .dataTypeSpecific.clazz = GPBObjCClass(NEntitySync),
+        .number = SpaceEntitySyncResponse_FieldNumber_EntitySync,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SpaceEntitySyncResponse__storage_, entitySync),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SpaceEntitySyncResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SpaceEntitySyncResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001\n\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GameEnterRequest
+
+@implementation GameEnterRequest
+
+@dynamic characterId;
+
+typedef struct GameEnterRequest__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t characterId;
+} GameEnterRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "characterId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GameEnterRequest_FieldNumber_CharacterId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GameEnterRequest__storage_, characterId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GameEnterRequest class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GameEnterRequest__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001\013\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GameEnterResponse
+
+@implementation GameEnterResponse
+
+@dynamic success;
+@dynamic hasEntity, entity;
+@dynamic hasCharacter, character;
+
+typedef struct GameEnterResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NEntity *entity;
+  NCharacter *character;
+} GameEnterResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "success",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GameEnterResponse_FieldNumber_Success,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "entity",
+        .dataTypeSpecific.clazz = GPBObjCClass(NEntity),
+        .number = GameEnterResponse_FieldNumber_Entity,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GameEnterResponse__storage_, entity),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "character",
+        .dataTypeSpecific.clazz = GPBObjCClass(NCharacter),
+        .number = GameEnterResponse_FieldNumber_Character,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(GameEnterResponse__storage_, character),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GameEnterResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GameEnterResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SpaceCharactersEnterResponse
+
+@implementation SpaceCharactersEnterResponse
+
+@dynamic spaceId;
+@dynamic characterListArray, characterListArray_Count;
+
+typedef struct SpaceCharactersEnterResponse__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t spaceId;
+  NSMutableArray *characterListArray;
+} SpaceCharactersEnterResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = SpaceCharactersEnterResponse_FieldNumber_SpaceId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SpaceCharactersEnterResponse__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "characterListArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(NCharacter),
+        .number = SpaceCharactersEnterResponse_FieldNumber_CharacterListArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(SpaceCharactersEnterResponse__storage_, characterListArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SpaceCharactersEnterResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SpaceCharactersEnterResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\002\001\007\000\002\000characterList\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SpaceCharacterLeaveResponse
+
+@implementation SpaceCharacterLeaveResponse
+
+@dynamic entityId;
+
+typedef struct SpaceCharacterLeaveResponse__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t entityId;
+} SpaceCharacterLeaveResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "entityId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = SpaceCharacterLeaveResponse_FieldNumber_EntityId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SpaceCharacterLeaveResponse__storage_, entityId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SpaceCharacterLeaveResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SpaceCharacterLeaveResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001\010\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
@@ -550,6 +1018,7 @@ typedef struct UserLoginRequest__storage_ {
 
 @implementation UserLoginResponse
 
+@dynamic success;
 @dynamic code;
 @dynamic message;
 
@@ -569,7 +1038,7 @@ typedef struct UserLoginResponse__storage_ {
         .name = "code",
         .dataTypeSpecific.clazz = Nil,
         .number = UserLoginResponse_FieldNumber_Code,
-        .hasIndex = 0,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(UserLoginResponse__storage_, code),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
@@ -578,10 +1047,19 @@ typedef struct UserLoginResponse__storage_ {
         .name = "message",
         .dataTypeSpecific.clazz = Nil,
         .number = UserLoginResponse_FieldNumber_Message,
-        .hasIndex = 1,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(UserLoginResponse__storage_, message),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "success",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UserLoginResponse_FieldNumber_Success,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -591,6 +1069,415 @@ typedef struct UserLoginResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UserLoginResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - EntitySyncResponse
+
+@implementation EntitySyncResponse
+
+@dynamic entityListArray, entityListArray_Count;
+
+typedef struct EntitySyncResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *entityListArray;
+} EntitySyncResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "entityListArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(NEntity),
+        .number = EntitySyncResponse_FieldNumber_EntityListArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(EntitySyncResponse__storage_, entityListArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[EntitySyncResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(EntitySyncResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001\000entityList\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - EntityEnterResponse
+
+@implementation EntityEnterResponse
+
+@dynamic hasEntity, entity;
+
+typedef struct EntityEnterResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NEntity *entity;
+} EntityEnterResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "entity",
+        .dataTypeSpecific.clazz = GPBObjCClass(NEntity),
+        .number = EntityEnterResponse_FieldNumber_Entity,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(EntityEnterResponse__storage_, entity),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[EntityEnterResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(EntityEnterResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CharacterCreateRequest
+
+@implementation CharacterCreateRequest
+
+@dynamic name;
+@dynamic jobType;
+
+typedef struct CharacterCreateRequest__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t jobType;
+  NSString *name;
+} CharacterCreateRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "name",
+        .dataTypeSpecific.clazz = Nil,
+        .number = CharacterCreateRequest_FieldNumber_Name,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CharacterCreateRequest__storage_, name),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "jobType",
+        .dataTypeSpecific.clazz = Nil,
+        .number = CharacterCreateRequest_FieldNumber_JobType,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(CharacterCreateRequest__storage_, jobType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CharacterCreateRequest class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CharacterCreateRequest__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\002\007\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ChracterCreateResponse
+
+@implementation ChracterCreateResponse
+
+@dynamic success;
+@dynamic message;
+@dynamic hasCharacter, character;
+
+typedef struct ChracterCreateResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *message;
+  NCharacter *character;
+} ChracterCreateResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "success",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ChracterCreateResponse_FieldNumber_Success,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "message",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ChracterCreateResponse_FieldNumber_Message,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(ChracterCreateResponse__storage_, message),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "character",
+        .dataTypeSpecific.clazz = GPBObjCClass(NCharacter),
+        .number = ChracterCreateResponse_FieldNumber_Character,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(ChracterCreateResponse__storage_, character),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ChracterCreateResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ChracterCreateResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CharacterListRequest
+
+@implementation CharacterListRequest
+
+
+typedef struct CharacterListRequest__storage_ {
+  uint32_t _has_storage_[1];
+} CharacterListRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CharacterListRequest class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(CharacterListRequest__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CharacterListResponse
+
+@implementation CharacterListResponse
+
+@dynamic characterListArray, characterListArray_Count;
+
+typedef struct CharacterListResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *characterListArray;
+} CharacterListResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "characterListArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(NCharacter),
+        .number = CharacterListResponse_FieldNumber_CharacterListArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(CharacterListResponse__storage_, characterListArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CharacterListResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CharacterListResponse__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001\000characterList\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CharacterDeleteRequest
+
+@implementation CharacterDeleteRequest
+
+@dynamic characterId;
+
+typedef struct CharacterDeleteRequest__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t characterId;
+} CharacterDeleteRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "characterId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = CharacterDeleteRequest_FieldNumber_CharacterId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CharacterDeleteRequest__storage_, characterId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CharacterDeleteRequest class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CharacterDeleteRequest__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001\013\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CharacterDeleteResponse
+
+@implementation CharacterDeleteResponse
+
+@dynamic success;
+@dynamic message;
+
+typedef struct CharacterDeleteResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *message;
+} CharacterDeleteResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "success",
+        .dataTypeSpecific.clazz = Nil,
+        .number = CharacterDeleteResponse_FieldNumber_Success,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "message",
+        .dataTypeSpecific.clazz = Nil,
+        .number = CharacterDeleteResponse_FieldNumber_Message,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(CharacterDeleteResponse__storage_, message),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CharacterDeleteResponse class]
+                                     rootClass:[MessageRoot class]
+                                          file:MessageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CharacterDeleteResponse__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
